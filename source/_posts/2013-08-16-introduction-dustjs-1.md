@@ -3,12 +3,12 @@ layout: post
 title: "Dust.js语法简介（一）"
 date: 2013-08-16 9:44
 comments: true
-categories:
+tags:
  - 技术
  - Javascript
 ---
 
-[经过一轮挣扎]({{site_root}}/blog/2013/08/15/introduction-client-template/)，我作出了与LinkedIn一样的选择，使用Dust.js作为模板，但是因为Dust.js缺少中文文档，导致在国内的普及率比较低。于是我决定在这里对Dust的语法进行一些必要的介绍。
+[经过一轮挣扎](/2013/08/15/introduction-client-template/)，我作出了与LinkedIn一样的选择，使用Dust.js作为模板，但是因为Dust.js缺少中文文档，导致在国内的普及率比较低。于是我决定在这里对Dust的语法进行一些必要的介绍。
 
 <!--more-->
 
@@ -65,11 +65,11 @@ Dustjs、dust.js或者直接叫Dust，是一种模板，一开始是由[Aleksand
 
 从[dust.js的导引页面](http://akdubya.github.io/dustjs/)看来，这个模板制作者还是很有诚意的。可惜这个项目已于两年前停止更新，版本停留在0.3.0。好消息是大型职业社交网[LinkedIn](http://www.linkedin.com)也了解到了这个模板的优点和潜力，并接手了Dust.js的后续开发，最终出来的就是现在的[Dust.js(LinkedIn)](http://linkedin.github.io/dustjs/)，为了简便起见后面继续称之为Dust。经过不断地更新，Dust目前已经到了2.0版本了。
 
-##
+## 结语
 
 由于时间关系，我还是决定将真正的语法介绍留到下一篇文章了，敬请期待。
 
 ##文章链接
-- [Dust.js语法简介（一）]({{site_root}}/blog/2013/08/16/introduction-dustjs-1)
-- [Dust.js语法简介（二）]({{site_root}}/blog/2013/08/17/introduction-dustjs-2)
-- [Dust.js语法简介（三）]({{site_root}}/blog/2013/08/19/introduction-dustjs-3)
+- [Dust.js语法简介（一）](/2013/08/16/introduction-dustjs-1)
+- [Dust.js语法简介（二）](/2013/08/17/introduction-dustjs-2)
+- [Dust.js语法简介（三）](/2013/08/19/introduction-dustjs-3)

@@ -3,13 +3,13 @@ layout: post
 title: "关于《颤抖吧 废怯少女！》"
 date: 2012-03-25 00:00
 comments: true
-categories:
+tags:
  - 社团
  - 作品
  - 同人
 ---
 
-<img src="{{ root_url }}/images/spg01_cover.jpg" alt="颤抖吧 废怯少女 封面"/>
+<img src="/images/spg01_cover.jpg" alt="颤抖吧 废怯少女 封面"/>
 
 《颤抖吧 废怯少女！》是本社团的首部游戏作品。抱歉的是，由于缺乏经验，游戏实在做的不完善，而且后期没有进行详细的说明讲解，导致了很多玩家的疑惑。为了使本作不至于成为一个黑历史，所以在这里做一些补充的说明。
 
@@ -73,19 +73,19 @@ Shift(左) 加速/减速
 <h3>游戏模式</h3>
 本作采取SLG + STG的创新游戏模式，玩家在每一个关卡经过初始对白后将进入SLG界面。可控制角色为三位魔女。
 
-<img src="{{ root_url }}/images/spg01_01.png" alt="颤抖吧 废怯少女 Sample01"/>
+<img src="/images/spg01_01.jpg" alt="颤抖吧 废怯少女 Sample01"/>
 
 使用箭头键将光标移动到角色位置，按Z，打开行动菜单，可以选择移动或者攻击。
 
-<img src="{{ root_url }}/images/spg01_02.png" alt="颤抖吧 废怯少女 Sample02"/>
+<img src="/images/spg01_02.jpg" alt="颤抖吧 废怯少女 Sample02"/>
 
 若选择移动，可以将角色移动到移动范围内的任何可达位置，若选择攻击，则可选用武器对敌方单位进行攻击。注意武器分为近战和远程，远程武器射程和威力一般较高，但是不能在移动后使用。无法使用的武器，或者攻击范围内无敌方单位的武器会被标注为灰色。
 
-<img src="{{ root_url }}/images/spg01_03.png" alt="颤抖吧 废怯少女 Sample03"/>
+<img src="/images/spg01_03.jpg" alt="颤抖吧 废怯少女 Sample03"/>
 
 选择武器后可以选择攻击目标。在目标上按Z，进入战斗确认画面，这里可以看到敌我双方的战力数据，再次按Z进入战斗，按X可以取消战斗。
 
-<img src="{{ root_url }}/images/spg01_04.png" alt="颤抖吧 废怯少女 Sample04"/>
+<img src="/images/spg01_04.jpg" alt="颤抖吧 废怯少女 Sample04"/>
 
 进入战斗后，接口会变成弹幕射击游戏接口，此时玩家需要控制我方单位，躲避敌方子弹，并尽量使己方子弹击中敌方单位。按Z射击，按X释放消弹或护盾，进入无敌状态一定时间。结束战斗需要满足以下条件之一：
 

@@ -3,7 +3,7 @@ layout: post
 title: "IOS Safari 浏览器的点击事件问题"
 date: 2014-09-03 16:11
 comments: true
-categories:
+tags:
  - 技术
  - Javascript
  - iOS

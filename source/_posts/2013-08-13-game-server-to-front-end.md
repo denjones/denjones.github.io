@@ -3,7 +3,7 @@ layout: post
 title: "从游戏服务端到Web前端"
 date: 2013-08-13 16:03
 comments: true
-categories:
+tags:
  - 随笔
  - 技术
 ---

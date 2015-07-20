@@ -3,7 +3,7 @@ layout: post
 title: "Dust.js语法简介（二）"
 date: 2013-08-17 16:26
 comments: true
-categories:
+tags:
  - 技术
  - Javascript
 ---
@@ -209,6 +209,6 @@ Hi Bob Good to see you
 至此，我们已经可以简单地将模板付诸应用了。下一节将介绍一些逻辑相关的语法。
 
 ##文章链接
-- [Dust.js语法简介（一）]({{site_root}}/blog/2013/08/16/introduction-dustjs-1)
-- [Dust.js语法简介（二）]({{site_root}}/blog/2013/08/17/introduction-dustjs-2)
-- [Dust.js语法简介（三）]({{site_root}}/blog/2013/08/19/introduction-dustjs-3)
+- [Dust.js语法简介（一）](/2013/08/16/introduction-dustjs-1)
+- [Dust.js语法简介（二）](/2013/08/17/introduction-dustjs-2)
+- [Dust.js语法简介（三）](/2013/08/19/introduction-dustjs-3)

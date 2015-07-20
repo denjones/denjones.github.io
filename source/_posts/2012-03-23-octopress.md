@@ -3,7 +3,7 @@ layout: post
 title: "关于在64位 Windows 7 中部署中文化的Octopress"
 date: 2012-03-23 15:52
 comments: true
-categories:  
+tags:  
  - Octopress
  - 技术
 ---

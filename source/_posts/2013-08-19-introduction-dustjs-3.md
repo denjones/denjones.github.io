@@ -3,12 +3,12 @@ layout: post
 title: "Dust.js语法简介（三）"
 date: 2013-08-19 15:53
 comments: true
-categories:
+tags:
  - 技术
  - Javascript
 ---
 
-[上一篇]({{site_root}}/blog/2013/08/17/introduction-dustjs-2/)介绍了Dust的最基本的语法，已经足够应付一般的模板翻译。这一章将介绍一些涉及逻辑的Dust语法以及介绍如何在前端应用模板。
+[上一篇](/2013/08/17/introduction-dustjs-2/)介绍了Dust的最基本的语法，已经足够应付一般的模板翻译。这一章将介绍一些涉及逻辑的Dust语法以及介绍如何在前端应用模板。
 
 <!--more-->
 
@@ -218,11 +218,11 @@ var output3 = dust.compile(childStr, "child");
 
 注意此时不再需要使用dust.loadSource()来注册，因为script标签将js文件执行了一次，已经将模板注册好了。此时已可使用dust.render()进行渲染。
 
-##结语
+## 结语
 
 至此，我们已经可以在前端中使用模板了，但是还有一些高级功能这里并未涉及，包括`@`辅助标签以及自定义扩展标签，如果有动力写Dust.js语法简介（四）的话，我将会在那介绍。除此之外，这里只提供了在Linux编译模板的一些官方方法，若需要在Windows下编译模板，则比较麻烦，有机会再写一篇如何在Windows下编译模板的教程吧。
 
 ##文章链接
-- [Dust.js语法简介（一）]({{site_root}}/blog/2013/08/16/introduction-dustjs-1)
-- [Dust.js语法简介（二）]({{site_root}}/blog/2013/08/17/introduction-dustjs-2)
-- [Dust.js语法简介（三）]({{site_root}}/blog/2013/08/19/introduction-dustjs-3)
+- [Dust.js语法简介（一）](/2013/08/16/introduction-dustjs-1)
+- [Dust.js语法简介（二）](/2013/08/17/introduction-dustjs-2)
+- [Dust.js语法简介（三）](/2013/08/19/introduction-dustjs-3)

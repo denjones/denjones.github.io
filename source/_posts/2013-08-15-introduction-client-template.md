@@ -3,7 +3,7 @@ layout: post
 title: "前端模板的选择"
 date: 2013-08-15 20:01
 comments: true
-categories:
+tags:
  - 随笔
  - 技术
  - Javascript

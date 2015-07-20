@@ -3,7 +3,7 @@ layout: post
 title: "在新Windows系统中重新部署Octopress"
 date: 2012-12-21 19:10
 comments: true
-categories:  
+tags:  
  - Octopress
  - 技术
 ---

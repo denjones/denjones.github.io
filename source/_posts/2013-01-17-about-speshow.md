@@ -3,7 +3,7 @@ layout: post
 title: "关于SpeShow"
 date: 2013-01-17 15:07
 comments: true
-categories:  
+tags:  
  - 社团
  - 技术
 ---

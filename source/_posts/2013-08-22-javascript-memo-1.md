@@ -14,7 +14,7 @@ javascript:
  - jquery-ui.js
  - jsmemo/jquery.imagecrop.js
  - jsmemo/imagecrop.js
-categories:
+tags:
  - 技术
  - Javascript
 ---
@@ -34,14 +34,14 @@ categories:
 下面这里有一个例子:
 
 <div class="photo">
-	<img class="photo_drag" src="{{ site_root }}/images/jsmemo/enako.jpg" alt="enako" />
+	<img class="photo_drag" src="/images/jsmemo/enako.jpg" alt="enako" />
 </div>
 
 点击图片可以拖动，如果你在IE之外支持canvas的浏览器中打开，还会有旋转的效果。
 但是，如果只添加了拖动相关的代码的话，一开始会是下面这样：
 
 <div class="photo">
-	<img src="{{ site_root }}/images/jsmemo/enako.jpg" alt="enako" />
+	<img src="/images/jsmemo/enako.jpg" alt="enako" />
 </div>
 
 没错，就跟没添加没什么区别（实际上我懒得再写一份没做处理的javascript了，所以上面这个确实没添加-_-|||，嘛效果是一样的）。
@@ -86,14 +86,14 @@ if ( e.preventDefault ) {
 一个比较常见的应用就是截图插件：
 
 <div id="photo">
-	<img id="scene" src="{{ site_root }}/images/jsmemo/scene.jpg" alt="scene"/>
+	<img id="scene" src="/images/jsmemo/scene.jpg" alt="scene"/>
 </div>
 
 如果你想做出来选中内容跟未选中内容表现得不一样的效果，如上面的模糊与清晰的差别，那么很幸运，你将不会遇到奇怪的问题。
 一旦你选择做出下面这种没有差别的效果，那就跪了，在IE你几乎无法移动那个小框（点小框的边框就可以）。
 
 <div id="photo2">
-	<img id="scene2" src="{{ site_root }}/images/jsmemo/scene.jpg" alt="scene"/>
+	<img id="scene2" src="/images/jsmemo/scene.jpg" alt="scene"/>
 </div>
 
 一开始我百思不得其解，因为点选框内，却产生了默认拖拽图片的操作，于是按上面的方法来修改onmouse事件，却无效。
@@ -106,7 +106,7 @@ IE在这里耍了点小聪明，以为这样可以方便消息的穿透，谁知
 不过好在解决方法是简单的，希望保持透明的话，加一层透明的背景就行了，这就不是没内容，而只是内容看不见而已。
 
 <div id="photo3">
-	<img id="scene3" src="{{ site_root }}/images/jsmemo/scene.jpg" alt="scene"/>
+	<img id="scene3" src="/images/jsmemo/scene.jpg" alt="scene"/>
 </div>
 
 而第一个效果分离的截图插件之所以不会遇到问题是因为这种效果一般是在小框内再包含一幅图像来实现的，就不再是透明的小框了。

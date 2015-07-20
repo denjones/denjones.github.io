@@ -3,7 +3,7 @@ layout: post
 title: "Sicily Android 小应用"
 date: 2013-01-17 15:46
 comments: true
-categories:
+tags:
  - 社团
  - 作品
  - 同人
@@ -13,9 +13,9 @@ categories:
 
 好吧，稍安勿躁，在游戏推出之前先让茜茜酱在手机里安抚一下大家的心灵吧。
 
-![Sicily Widget]({{ root_url }}/images/android_sicily_widget.jpg)
+![Sicily Widget](/images/android_sicily_widget.jpg)
 
-![Sicily Main]({{ root_url }}/images/android_sicily_main.jpg)
+![Sicily Main](/images/android_sicily_main.jpg)
 
 <!--more-->
 
