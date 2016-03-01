@@ -3,8 +3,9 @@ layout: post
 title: "小圆同人四格漫画《Predestined》"
 date: 2011-07-26 13:22
 comments: true
-tags:
+categories:
  - 社团
+tags:
  - 作品
  - 同人
 ---

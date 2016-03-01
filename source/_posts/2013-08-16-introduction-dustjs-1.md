@@ -3,8 +3,9 @@ layout: post
 title: "Dust.js语法简介（一）"
 date: 2013-08-16 9:44
 comments: true
-tags:
+categories:
  - 技术
+tags:
  - Javascript
 ---
 

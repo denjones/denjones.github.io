@@ -3,8 +3,9 @@ layout: post
 title: "Sicily Android 小应用"
 date: 2013-01-17 15:46
 comments: true
-tags:
+categories:
  - 社团
+tags:
  - 作品
  - 同人
 ---

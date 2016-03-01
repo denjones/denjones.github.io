@@ -3,8 +3,9 @@ layout: post
 title: "关于《颤抖吧 废怯少女！》"
 date: 2012-03-25 00:00
 comments: true
-tags:
+categories:
  - 社团
+tags:
  - 作品
  - 同人
 ---

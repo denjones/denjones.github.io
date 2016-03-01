@@ -3,9 +3,10 @@ layout: post
 title: "在新Windows系统中重新部署Octopress"
 date: 2012-12-21 19:10
 comments: true
+categories:
+ - 技术
 tags:  
  - Octopress
- - 技术
 ---
 
 最近重装Win7 x64后直接在线升级到了Win8 x64，很多东西都要重新部署，包括octopress环境。这里记录一下关键的步骤，以便日后参考。

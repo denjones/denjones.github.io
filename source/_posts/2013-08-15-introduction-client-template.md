@@ -3,9 +3,9 @@ layout: post
 title: "前端模板的选择"
 date: 2013-08-15 20:01
 comments: true
-tags:
- - 随笔
+categories:
  - 技术
+tags:
  - Javascript
 ---
 

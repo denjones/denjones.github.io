@@ -4,15 +4,15 @@
 
 # Site
 title: SPRABBIT
-subtitle:
-description:
+subtitle: 菩提本无树，明镜亦非台；本来无一物，何处惹尘埃？
+description: 一个文艺技术的博客
 author: Kenneth
 language: zh-CN
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://denjones.github.io
+url: http://blog.sprabbit.com
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -26,6 +26,9 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
+  - _posts/2013-08-22-javascript-memo-1/*
+  - scripts/**
+  - styles/**
 
 # Writing
 new_post_name: :year-:month-:day-:title.md # File name of new posts
@@ -34,7 +37,7 @@ titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
 highlight:
@@ -64,7 +67,7 @@ pagination_dir: page
 ## Plugins: http://hexo.io/plugins/
 ## Themes: http://hexo.io/themes/
 ## theme: landscape
-theme: yilia
+theme: chan
 
 
 # Deployment
