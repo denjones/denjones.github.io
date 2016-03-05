@@ -5,6 +5,7 @@ comments: true
 categories:
  - 技术
 tags:
+ - Javascript
  - Angular
  - React
  - Vue
@@ -75,14 +76,17 @@ scope.$watch(ngBindHtmlWatch, function ngBindHtmlWatchAction() {
 
 但是如果你要自己写 directive 或者想用 Angular 体系外的东西时，就得手动触发 $digest 循环：`$scope.$apply()`。
 
-### 小结
+### 性能
 
 总的来说，Angular 渲染的逻辑就是，在任何可能引发 ViewModel 改变的地方，调用 $digest 循环进行脏值检查并在发现脏值后修改DOM树进行渲染，直到 ViewModel 稳定下来。
 
 可以看出来，一次可能的变动，将遍历整个应用中绑定的监听器，效率十分低。不过优化的方法也很明显，就是减少绑定监听器的数量，比如在一些绑定后不会变化的地方在一次脏值出现后马上注销监听器（bind-once)，或者在可能发生脏值之前再注册监听器，之后马上注销监听器等等。
 
-由于文章有点长，所以 React 和 Vue 下期再写。
+### 小结
 
+Angular 虽然有点慢，但是无可否认，用户会为此埋单，毕竟良好的兼容性，众多的插件，方便的双向绑定都得到了人们的中意。
+
+由于文章有点长，所以 React 和 Vue {% post_link Angular-React-Vue-Rendering-2 下期再写 %}。
 
 [1]: https://angular.io
 [2]: https://facebook.github.io/react
