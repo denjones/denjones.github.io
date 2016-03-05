@@ -11,13 +11,11 @@ tags:
  - Vue
 ---
 
-{% post_link Angular-React-Vue-Rendering-1 上一篇 %} 我总结了 [Angular][1] 的渲染实现，今天我们来看看 [React][2]。
+我在 {% post_link Angular-React-Vue-Rendering-1 上一篇 %} 总结了 [Angular][1] 的渲染实现，今天我们来看看 [React][2]。
 
 ## React
 
-React 的渲染套路简单来说就是虚拟DOM树（Virtual DOM）。React 的思想有点儿像 Web Component，但是他又是一个独立的实现，可以纯粹使用 js 逻辑实现了前端组件化。看似 HTML + JS 的新语言 JSX，实际上会编译成完全的 js 代码，所有的 HTML 都转换成了 JS 的 DOM 操作，只不过这里操作的 DOM 并不是真正的 DOM，而是 React 实现的一套映射到真正 DOM 的虚拟 DOM。并且 React 的重点在于 'React'，即视图响应数据变化。
-
-<!--more-->
+React 的渲染套路简单来说就是虚拟DOM树（Virtual DOM）。React 的思想有点儿像 Web Component，但是他又是一个独立的实现，可以纯粹使用 js 逻辑实现了前端组件化。看似 HTML + JS 的新语言 JSX，实际上会编译成完全的 js 代码，所有的 HTML 都转换成了 JS 的 DOM 操作，只不过这里操作的 DOM 并不是真正的 DOM，而是 React 实现的一套映射到真正 DOM 的虚拟 DOM。并且 React 的重点在于 'React'，即视图响应数据变化。<!--more-->
 
 这里讨论的 React 目前是 0.14 版本的，鉴于对这个版本 0.12 版本做了很大的更改，所以并不确定更新到 1.0 后本文还是否适用，请注意。
 
