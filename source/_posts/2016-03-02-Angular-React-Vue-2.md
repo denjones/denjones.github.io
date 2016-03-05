@@ -1,5 +1,5 @@
 ---
-title: ARV 渲染实现比较之 React & Vue
+title: ARV 渲染实现比较之 React
 date: 2016-03-02 19:06:55
 comments: true
 categories:
