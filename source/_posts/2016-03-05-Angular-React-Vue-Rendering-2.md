@@ -15,7 +15,9 @@ tags:
 
 ## React
 
-React 的渲染套路简单来说就是虚拟DOM树（Virtual DOM）。React 的思想有点儿像 Web Component，但是他又是一个独立的实现，可以纯粹使用 js 逻辑实现了前端组件化。看似 HTML + JS 的新语言 JSX，实际上会编译成完全的 js 代码，所有的 HTML 都转换成了 JS 的 DOM 操作，只不过这里操作的 DOM 并不是真正的 DOM，而是 React 实现的一套映射到真正 DOM 的虚拟 DOM。并且 React 的重点在于 'React'，即视图响应数据变化。<!--more-->
+React 的渲染套路简单来说就是虚拟DOM树（Virtual DOM）。React 的思想有点儿像 Web Component，但是他又是一个独立的实现，可以纯粹使用 js 逻辑实现了前端组件化。看似 HTML + JS 的新语言 JSX，实际上会编译成完全的 js 代码，所有的 HTML 都转换成了 JS 的 DOM 操作，只不过这里操作的 DOM 并不是真正的 DOM，而是 React 实现的一套映射到真正 DOM 的虚拟 DOM。并且 React 的重点在于 'React'，即视图响应数据变化。
+
+<!--more-->
 
 这里讨论的 React 目前是 0.14 版本的，鉴于对这个版本 0.12 版本做了很大的更改，所以并不确定更新到 1.0 后本文还是否适用，请注意。
 
@@ -103,7 +105,7 @@ var element = React.createElement(MyComponent, props, child);
 var component = ReactDOM.render(element, container, callback);
 ```
 
-其中第一参数为一棵虚拟DOM数的根节点元素，第二个参数为一个 HTML DOM 元素，返回结果是绑定成功后生成的component 实例的引用（ref）。这里又多了一个概念 ReactElement 的实例，据我们所知 ReactComponent 跟 ReactElement 是一个级别的东西，是虚拟DOM树的基本结构，为什么还有实例？简单来说，只有一个虚拟的 ReactElement 被绑定到一个真实 DOM 元素上，它内部才能正常运作，所以只有绑定后才能产生一个真正可以调用的实例。
+其中第一参数为一棵虚拟 DOM 树的根节点元素，第二个参数为一个 HTML DOM 元素，返回结果是绑定成功后生成的component 实例的引用（ref）。这里又多了一个概念 ReactElement 的实例，据我们所知 ReactComponent 跟 ReactElement 是一个级别的东西，是虚拟 DOM 树的基本结构，为什么还有实例？简单来说，只有一个虚拟的 ReactElement 被绑定到一个真实 DOM 元素上，它内部才能正常运作，所以只有绑定后才能产生一个真正可以调用的实例。
 
 调用了 `ReactDOM.render` 之后，这个虚拟 DOM 树的结构将按初始状态原封不动的渲染成真实 DOM 结构，并完成内部 ReactElement 到 DOMElement 的绑定。
 
@@ -118,7 +120,7 @@ React 的 ViewModel 实际上就是 ReactComponent 的 state 和 props，View �
 
 Reconciliation 这个词怎么翻译，我也不确定，估计可以称之为“调解”，调解因从一棵虚拟 DOM 树（局部）变成另一棵 DOM 树引起的“冲突”。
 
-如果要准确比较两棵虚拟 DOM 树的差异并分解成最少的节点操作，可能需要 O(n3) 的复杂度，这样最节省操作真实 DOM 的成本，但是显然这相对于直接重新渲染而言是更耗费性能的。React 使用了一种较为粗暴的 O(n) 方法来找到一个较优解，在 DOM 操作和对比差异之前取得了良好的平衡。
+如果要准确比较两棵虚拟 DOM 树的差异并分解成最少的节点操作，可能需要 O(n3) 的复杂度，这样最节省操作真实 DOM 的成本，但是显然这相对于直接重新渲染而言是更耗费性能的。React 使用了一种较为粗暴的 O(n) 方法来找到一个较优解，在 DOM 操作和对比差异之间取得了良好的平衡。
 
 元素级别的对比：
  - 如果对比某个节点的类型发生变化，则重新渲染该节点
@@ -151,6 +153,11 @@ React 渲染速度很快，这要得益于他将所有模版操作都预先编�
 然而 React 的优势又不止性能，与 ES6 高度兼容，搭配 Webpack 轻易实现模块化，前后端可以实现同构（isomorphic）等等都是 React 的加分点。React 可以说是做 View-ViewModel 这一块只做一件事，并且做到了极致。但是这也意味着只使用 React 可能是不够的，还需要用到 Flux，Redux 之类的数据模型和事件处理框架。然而单单 React 一个库压缩后就达到了 200k 左右的大小，加上其他诸如 React-Router，jQuery，Immutable 等等大小就更加令人瞠目结舌，虽然今天网速已经很快，但是第一次加载仍然会让人觉得等待很漫长，毕竟需要先加载完 React 才能进行渲染，除非通过同构服务端渲染来进行第一遍渲染。
 
 Vue 下期再写了。
+
+文章链接：
+ - {% post_link Angular-React-Vue-Rendering-1 %}
+ - {% post_link Angular-React-Vue-Rendering-2 %}
+ - {% post_link Angular-React-Vue-Rendering-3 %}
 
 [1]: https://angular.io
 [2]: https://facebook.github.io/react
