@@ -158,6 +158,7 @@ Vue 下期再写了。
  - {% post_link Angular-React-Vue-Rendering-1 %}
  - {% post_link Angular-React-Vue-Rendering-2 %}
  - {% post_link Angular-React-Vue-Rendering-3 %}
+ - {% post_link Angular-React-Vue-Rendering-4 %}
 
 [1]: https://angular.io
 [2]: https://facebook.github.io/react

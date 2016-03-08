@@ -111,6 +111,7 @@ Vue 的性能可以说是无可挑剔的，利用 ES5 的 defineProperty 特性�
  - {% post_link Angular-React-Vue-Rendering-1 %}
  - {% post_link Angular-React-Vue-Rendering-2 %}
  - {% post_link Angular-React-Vue-Rendering-3 %}
+ - {% post_link Angular-React-Vue-Rendering-4 %}
 
 
 [1]: https://angular.io
