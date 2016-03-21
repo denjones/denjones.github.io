@@ -17,6 +17,8 @@ React 文件体积为何如此庞大？首先，为什么会得出 React 大的�
 
 React 作为一个 View-ViewModel 库，相比于 Mithril，Vue 这些目的大致相同的库，文件显得尤为庞大，甚至比 Angular 这种全能 MVVM 框架还大。但是这就能说 React 大吗，我认为是的，Mithril 与 React 都是基于 Virtual DOM 的实现，我觉得这很有可比性。虽然 Mithril 的真实性能大致为 React 的一半，但是代码量却是 React 的不到 1/10（实际上 Mithril 只有大概 2000 行代码），Mithril 在使用了一些小技巧之后甚至性能飙升至 React 的数十倍。对 Mithril 感兴趣可以看下 {% post_link Mithril-Rendering 我对 Mithril 渲染性能的分析 %}。
 
+<!--more-->
+
 通过分析 React 的源码及其打包过程，可以得出 React 的成分构成：
  - React: 687KB 100%
    - renderers 这部分代表了 Virtual DOM 的渲染部分
