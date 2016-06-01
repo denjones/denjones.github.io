@@ -159,7 +159,8 @@ Vue 下期再写了。
  - {% post_link Angular-React-Vue-Rendering-2 %}
  - {% post_link Angular-React-Vue-Rendering-3 %}
  - {% post_link Angular-React-Vue-Rendering-4 %}
-
+ - {% post_link Mithril-Rendering %}
+ 
 [1]: https://angular.io
 [2]: https://facebook.github.io/react
 [3]: http://vuejs.org/

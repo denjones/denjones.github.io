@@ -108,6 +108,7 @@ Angular 虽然有点慢，但是无可否认，开发者会为此埋单，毕竟
  - {% post_link Angular-React-Vue-Rendering-2 %}
  - {% post_link Angular-React-Vue-Rendering-3 %}
  - {% post_link Angular-React-Vue-Rendering-4 %}
+ - {% post_link Mithril-Rendering %}
 
 [1]: https://angular.io
 [2]: https://facebook.github.io/react

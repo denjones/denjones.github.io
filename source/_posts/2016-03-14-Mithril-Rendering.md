@@ -58,7 +58,7 @@ m.mount(document.getElementById("example"), app);
 
 ### Virtual DOM
 
-怎么会出现 Virtual DOM，没错，Mithril 确实是用 Virtual DOM 实现的，你完全可以按照 React 的 Virtual DOM 来理解 Mithril 的 Virtual DOM。对 Virtural 建议先去看我 {% post_link 关于 Angular-React-Vue-Rendering-2 React 渲染的分析 %}。但是他们确实在细节上又有些不同。
+怎么会出现 Virtual DOM，没错，Mithril 确实是用 Virtual DOM 实现的，你完全可以按照 React 的 Virtual DOM 来理解 Mithril 的 Virtual DOM。对 Virtural 建议先去看我 {% post_link Angular-React-Vue-Rendering-2 关于 React 渲染的分析 %}。但是他们确实在细节上又有些不同。
 
 ### Cell
 

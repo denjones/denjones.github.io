@@ -52,13 +52,14 @@ Vue 每秒能进行 10000 次操作，又大约是 React 的 10 倍。每一次�
 
 ## 题外话
 
-虽然本文仅从渲染性能上对比 Angular，React 和 Vue，但是用于不用这些框架绝对不能仅看性能的。Angular 社区成熟，轮子丰富，开发快捷，适合开发面向客户的产品的需要追求沉稳需求；React 组件化思想浓厚，高度可重用，响应数据变化快捷，结合 Redux 等框架后开发具有复杂交互操作的产品十分便利，但是体积庞大，代码冗长书写速度较慢，适合开发对内的运营项目；Vue 轻便简洁，渲染速度极高，只做一件事并做到极致，但是缺少轮子，而且不支持 IE8，适合开发 Html5 项目，尤其是手机端 SAP。当然，最终的选择，还是看团队需求。
+虽然本文仅从渲染性能上对比 Angular，React 和 Vue，但是用于不用这些框架绝对不能仅看性能的。Angular 社区成熟，轮子丰富，开发快捷，适合开发面向客户的产品的需要追求沉稳需求；React 组件化思想浓厚，高度可重用，响应数据变化快捷，结合 Redux 等框架后开发具有复杂交互操作的产品十分便利，但是体积庞大，代码冗长书写速度较慢，适合开发对内的运营项目；Vue 轻便简洁，渲染速度极高，只做一件事并做到极致，但是缺少轮子，而且不支持 IE8，适合开发 Html5 项目，尤其是手机端 SPA。当然，最终的选择，还是看团队需求。
 
 文章链接：
  - {% post_link Angular-React-Vue-Rendering-1 %}
  - {% post_link Angular-React-Vue-Rendering-2 %}
  - {% post_link Angular-React-Vue-Rendering-3 %}
  - {% post_link Angular-React-Vue-Rendering-4 %}
+ - {% post_link Mithril-Rendering %}
 
 [1]: https://angular.io
 [2]: https://facebook.github.io/react
