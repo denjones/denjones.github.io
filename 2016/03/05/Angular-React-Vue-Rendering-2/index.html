@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    ARV 渲染实现比较之 React
+  
+</title>
+
+<meta name="description" content="我在 上一篇 总结了 Angular 的渲染实现，今天我们来看看 React。
+ReactReact 的渲染套路简单来说就是虚拟DOM树（Virtual DOM）。React 的思想有点儿像 Web Component，但是他又是一个独立的实现，可以纯粹使用 js 逻辑实现了前端组件化。看似 HTML + JS 的新语言 JSX，实际上会编译成完全的 js 代码，所有的 HTML 都转换成了 JS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ARV 渲染实现比较之 React">
+<meta property="og:url" content="http://blog.sprabbit.com/2016/03/05/Angular-React-Vue-Rendering-2/index.html">
+<meta property="og:site_name" content="SPRABBIT">
+<meta property="og:description" content="我在 上一篇 总结了 Angular 的渲染实现，今天我们来看看 React。
+ReactReact 的渲染套路简单来说就是虚拟DOM树（Virtual DOM）。React 的思想有点儿像 Web Component，但是他又是一个独立的实现，可以纯粹使用 js 逻辑实现了前端组件化。看似 HTML + JS 的新语言 JSX，实际上会编译成完全的 js 代码，所有的 HTML 都转换成了 JS">
+<meta property="og:updated_time" content="2016-07-24T02:45:08.179Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ARV 渲染实现比较之 React">
+<meta name="twitter:description" content="我在 上一篇 总结了 Angular 的渲染实现，今天我们来看看 React。
+ReactReact 的渲染套路简单来说就是虚拟DOM树（Virtual DOM）。React 的思想有点儿像 Web Component，但是他又是一个独立的实现，可以纯粹使用 js 逻辑实现了前端组件化。看似 HTML + JS 的新语言 JSX，实际上会编译成完全的 js 代码，所有的 HTML 都转换成了 JS">
+
+
+  <link rel="alternative" href="/atom.xml" title="SPRABBIT" type="application/atom+xml">
+
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?d98dab13c098e2a1f6439b963347ad32";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+</head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">SPRABBIT</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+  <div class="header">
+    <h1 class="title"><a href="/">SPRABBIT</a></h1>
+    
+      <p class="subtitle">
+        菩提本无树，明镜亦非台；本来无一物，何处惹尘埃？
+      </p>
+    
+    <div class="info">
+      <div class="content">
+        
+          <div class="description">一个文艺技术的博客</div>
+        
+        
+          <div class="author">Kenneth</div>
+        
+      </div>
+      
+        <div class="avatar">
+          
+            <a href="/about"><img src="https://cn.gravatar.com/avatar/35fef74d731255cd569c2c2b0b9e87e4?s=200"></a>
+          
+        </div>
+      
+    </div>
+  </div>
+  <div class="body">
+    
+      
+        <ul class="nav">
+          
+            
+              <li class="category-list-container">
+                <a href="javascript:;">分类</a>
+                <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/社团/">社团</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">4</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="tag-list-container">
+                <a href="javascript:;">标签</a>
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACG/">ACG</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/">Angular</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LoveLive/">LoveLive</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mithril/">Mithril</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Octopress/">Octopress</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/作品/">作品</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/同人/">同人</a><span class="tag-list-count">4</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="archive-list-container">
+                <a href="javascript:;">归档</a>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/">2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/">2013</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/">2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/">2011</a><span class="archive-list-count">1</span></li></ul>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="/" title="主页">主页</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/archives" title="文章">文章</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/about" title="关于">关于</a>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="https://github.com/denjones/hexo-theme-chan" title="Chan" target="_blank" rel="external">Chan</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="https://github.com/denjones" title="Github" target="_blank" rel="external">Github</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/atom.xml" title="RSS">RSS</a>
+              </li>
+            
+          
+        </ul>
+      
+    
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="post-Angular-React-Vue-Rendering-2" class="article article-type-post">
+  
+    <h1 class="article-header">
+      ARV 渲染实现比较之 React
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2016-03-05
+</span>
+
+    
+	<span class="article-category tagcloud">
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+	</span>
+
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Angular/">Angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Javascript/">Javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <p>我在 <a href="/2016/03/02/Angular-React-Vue-Rendering-1/" title="上一篇">上一篇</a> 总结了 <a href="https://angular.io" target="_blank" rel="external">Angular</a> 的渲染实现，今天我们来看看 <a href="https://facebook.github.io/react" target="_blank" rel="external">React</a>。</p>
+<h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><p>React 的渲染套路简单来说就是虚拟DOM树（Virtual DOM）。React 的思想有点儿像 Web Component，但是他又是一个独立的实现，可以纯粹使用 js 逻辑实现了前端组件化。看似 HTML + JS 的新语言 JSX，实际上会编译成完全的 js 代码，所有的 HTML 都转换成了 JS 的 DOM 操作，只不过这里操作的 DOM 并不是真正的 DOM，而是 React 实现的一套映射到真正 DOM 的虚拟 DOM。并且 React 的重点在于 ‘React’，即视图响应数据变化。</p>
+<a id="more"></a>
+<p>这里讨论的 React 目前是 0.14 版本的，鉴于对这个版本 0.12 版本做了很大的更改，所以并不确定更新到 1.0 后本文还是否适用，请注意。</p>
+<h3 id="StartUp"><a href="#StartUp" class="headerlink" title="StartUp"></a>StartUp</h3><p>React 的 jsx 启动代码大概如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ReactDOM.render(</div><div class="line">  <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, world!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>,</div><div class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'example'</span>)</div><div class="line">);</div></pre></td></tr></table></figure>
+<h3 id="JSX"><a href="#JSX" class="headerlink" title="JSX"></a>JSX</h3><p>虽然使用 React 一般使用React专用的 JSX 语法，但是运行时实际上会编译为 JS 语法，比如 JSX 的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> root = <span class="xml"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">className</span>=<span class="string">"my-list"</span>&gt;</span></span></div><div class="line">             <span class="tag">&lt;<span class="name">li</span>&gt;</span>Text Content<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">           <span class="tag">&lt;/<span class="name">ul</span>&gt;</span>;</div></pre></td></tr></table></figure>
+<p>会编译成类似以下的 JS：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> root = React.createElement(<span class="string">'ul'</span>, &#123; className: <span class="string">'my-list'</span> &#125;,</div><div class="line">             React.createElement(<span class="string">'li'</span>, <span class="literal">null</span>, <span class="string">'Text Content'</span>)</div><div class="line">           );</div></pre></td></tr></table></figure>
+<p>为了不那么绕，所以我接下来将直接采用 JS 语法来分析。</p>
+<h3 id="ReactElement"><a href="#ReactElement" class="headerlink" title="ReactElement"></a>ReactElement</h3><p>ReactElement 是组成 React 虚拟 DOM 的基本元素，它对应于真实 DOM 中的 HTMLElement，比如 div，li，或我们自定义的 Component。一个 ReactElement 可以是以下类型：</p>
+<ul>
+<li>ReactDOMElement（即HTML原生支持的元素）</li>
+<li>ReactComponentElement（我们定义的 Component 元素）</li>
+</ul>
+<p>创建 ReactElement 方法如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> element = React.createElement(type, props, children, ...);</div></pre></td></tr></table></figure>
+<p>其中第一个参数指定元素的标签名或 ReactClass，第二个参数可以指定元素的属性（props），比如 className 之类的，三个参数以及更多参数指定元素的内部元素，类型是 ReactNode。</p>
+<h3 id="ReactNode"><a href="#ReactNode" class="headerlink" title="ReactNode"></a>ReactNode</h3><p>ReactNode 即是 React 虚拟 DOM 树的节点，它对应于真实 DOM 的节点。一个 ReactNode 可以是下面的类型：</p>
+<ul>
+<li>ReactText（文字，数字）</li>
+<li>ReactElement</li>
+<li>ReactFragment（一个元素为ReactNode的数组）</li>
+</ul>
+<p>利用上面这些结构类型，就可以创建一棵由 ReactElement 构成的树。</p>
+<h3 id="ReactClass-amp-ReactComponent"><a href="#ReactClass-amp-ReactComponent" class="headerlink" title="ReactClass &amp; ReactComponent"></a>ReactClass &amp; ReactComponent</h3><p>有了上面的普通 ReactElement 和 ReactNode 就已经可以创建一棵树了，通过创建一些工厂函数也能重用一些元素结构。但是到目前为止也只实现了 View 而缺少 ViewModel，没有真正做到组件化。</p>
+<p>ReactClass 就是用来产生可重用的 ReactComponent 的类型，其实就是一个构造函数。下面是定义一个类名为 MyComponent 的组件类的方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> MyComponent = React.createClass(&#123;render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;...&#125;&#125;);</div></pre></td></tr></table></figure>
+<p>其中的 render 属性是一个必须实现的属性，他必须返回一个 ReactElement，React 就是通过这个 render 方法来将一个 ReactComponent 渲染成 ReactElement 的。有了 ReactClass 我们就可以为产生的 ReactComponent 赋予状态属性，然后在 render 方法根据状态的不同，返回结构不同的 ReactElement。</p>
+<p>注意以上定义好的 MyComponent 只是一个 ReactClass，要用它生产出 ReactComponent 元素，还需要像生成 ReactElement 那样去掉用 createElement 方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> element = React.createElement(MyComponent, props, child);</div></pre></td></tr></table></figure>
+<p>如果觉得 ReactClass 和 ReactComponent 理解起来还是比较抽象，那么可以将 ReactClass 想象成标签名，即 <code>div</code>,<code>video</code>，这种，但是他不是原生的标签，所以使用前需要先用 <code>createClass</code> 定义好。而 ReactComponent 就是跟 ReactElement 一个级别的东西。</p>
+<h3 id="ReactDOM-amp-第一遍渲染"><a href="#ReactDOM-amp-第一遍渲染" class="headerlink" title="ReactDOM &amp; 第一遍渲染"></a>ReactDOM &amp; 第一遍渲染</h3><p>有了上面的 ReactNode，ReactElement，ReactComponent，我们就可以完全的定制一棵有状态控制的虚拟DOM树，之所以说是虚拟的，是因为它只是逻辑上的数据结构，跟我们肉眼看到的页面并没有直接的联系。</p>
+<p>我们通过 ReactDOM 这个子库来做跟真实DOM相关的操作，比如将一棵虚拟 DOM 树渲染到一个 HTML 的 DOM 元素中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> component = ReactDOM.render(element, container, callback);</div></pre></td></tr></table></figure>
+<p>其中第一参数为一棵虚拟 DOM 树的根节点元素，第二个参数为一个 HTML DOM 元素，返回结果是绑定成功后生成的component 实例的引用（ref）。这里又多了一个概念 ReactElement 的实例，据我们所知 ReactComponent 跟 ReactElement 是一个级别的东西，是虚拟 DOM 树的基本结构，为什么还有实例？简单来说，只有一个虚拟的 ReactElement 被绑定到一个真实 DOM 元素上，它内部才能正常运作，所以只有绑定后才能产生一个真正可以调用的实例。</p>
+<p>调用了 <code>ReactDOM.render</code> 之后，这个虚拟 DOM 树的结构将按初始状态原封不动的渲染成真实 DOM 结构，并完成内部 ReactElement 到 DOMElement 的绑定。</p>
+<h3 id="数据更新"><a href="#数据更新" class="headerlink" title="数据更新"></a>数据更新</h3><p>React 的 ViewModel 实际上就是 ReactComponent 的 state 和 props，View 将根据这些状态和属性来改变。但是 React 不会去监听这些状态和属性的变化，每次改变 state 和 props 都需要手动调用 ReactComponent 的<br><code>setState</code> 和 <code>setProps</code> 方法，这些方法会通知 Component 更新渲染，也可以调用 <code>forceUpdate</code> 强制更新。更新渲染实际上是通过 render 方法实现的，因此 render 方法内部一般不可以再修改状态，否则有可能导致渲染死循环。</p>
+<h3 id="Reconciliation"><a href="#Reconciliation" class="headerlink" title="Reconciliation"></a>Reconciliation</h3><p>如果每次改动都需要重新渲染，那 React 造这些轮子也没啥价值了。接下来的 Reconciliation 才是 React 渲染实现的重点。</p>
+<p>Reconciliation 这个词怎么翻译，我也不确定，估计可以称之为“调解”，调解因从一棵虚拟 DOM 树（局部）变成另一棵 DOM 树引起的“冲突”。</p>
+<p>如果要准确比较两棵虚拟 DOM 树的差异并分解成最少的节点操作，可能需要 O(n3) 的复杂度，这样最节省操作真实 DOM 的成本，但是显然这相对于直接重新渲染而言是更耗费性能的。React 使用了一种较为粗暴的 O(n) 方法来找到一个较优解，在 DOM 操作和对比差异之间取得了良好的平衡。</p>
+<p>元素级别的对比：</p>
+<ul>
+<li>如果对比某个节点的类型发生变化，则重新渲染该节点</li>
+<li>类型相同的一般DOM元素（非 ReactComponent），可以在 O(n) 时间内找到其属性的变化并重现</li>
+<li>类型相同的 ReactComponent 不会被替换，将使用新组件的 props 去调用旧组件的 <code>component[Will/Did]ReceiveProps()</code> 方法并重新调用他的 render 方法</li>
+</ul>
+<p>列表级别的对比：</p>
+<ul>
+<li>按照顺序对两个列表的每一个列表项进行元素级别的对比操作，若最后多了就删掉，少了就插入新的元素</li>
+<li>如果一个列表项元素设置了 key 属性，则会对 key 值相同的项进行对比，并重现对应的调整位置，删除，插入操作</li>
+</ul>
+<p>利用以上规则来对比虚拟 DOM 树的变化并将操作重现到真实 DOM 上，节省了大部分重新创建删除 DOM 元素的成本，也让对比操作的复杂度保持在一个可控范围内。</p>
+<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><p>由 Reconciliation 的过程可以看出，提高性能的方法有几种：</p>
+<ul>
+<li>如果两个 ReactComponent 结构相近，并且会相互切换，尝试合并成一个</li>
+<li>所有列表项都加上 key 属性，并且令每个 key 在列表内稳定且唯一</li>
+<li>实现 ReactComponent 的 shouldComponentUpdate 方法，避免无谓的重新渲染</li>
+</ul>
+<p>其中如果你的 ReactComponent 的渲染结果是幂等的（即针对相同的 props 和 state 其渲染结果也一致），那么可以直接使用 React 提供的 PureRenderMixin，她相当于帮你实现了 shouldComponentUpdate 方法，如果 props 和 state 没有变化（对象级别为引用对比），将直接返回 false 防止重复渲染。</p>
+<p>但是如果你的 prop 或 state 属性是对象，而你必须对比对象内部属性的变化，可以使用 Facebook 的另外一个库 <a href="https://facebook.github.io/immutable-js/" target="_blank" rel="external">Immutable</a>，他可以用来创建不可变的对象，即要改变对象的属性必须拷贝并创建一个新的对象，这就令通过对比引用来对比对象属性变化成为可能。</p>
+<p>但是我个人觉得这样每修改一次就创建新的对象也是一笔开销，同时还要使用 Immutable 定义的属性方法去修改对象，如果可以自己实现 shouldComponentUpdate 去做必要的比较还是可行的。不过如果真的想用不可变数据的话建议看看 <a href="http://swannodette.github.io/mori/" target="_blank" rel="external">森(Mori)</a>，比 Immutable 要快一点。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>React 渲染速度很快，这要得益于他将所有模版操作都预先编译成了虚拟 DOM 创建操作，这节省了运行时编译的开销；得益于“调和”算法，虚拟 DOM 结构改变映射到真实 DOM 也节省了大量不必要的操作。</p>
+<p>然而 React 的优势又不止性能，与 ES6 高度兼容，搭配 Webpack 轻易实现模块化，前后端可以实现同构（isomorphic）等等都是 React 的加分点。React 可以说是做 View-ViewModel 这一块只做一件事，并且做到了极致。但是这也意味着只使用 React 可能是不够的，还需要用到 Flux，Redux 之类的数据模型和事件处理框架。然而单单 React 一个库压缩后就达到了 200k 左右的大小，加上其他诸如 React-Router，jQuery，Immutable 等等大小就更加令人瞠目结舌，虽然今天网速已经很快，但是第一次加载仍然会让人觉得等待很漫长，毕竟需要先加载完 React 才能进行渲染，除非通过同构服务端渲染来进行第一遍渲染。</p>
+<p>Vue 下期再写了。</p>
+<p>文章链接：</p>
+<ul>
+<li><a href="/2016/03/02/Angular-React-Vue-Rendering-1/" title="ARV 渲染实现比较之 Angular">ARV 渲染实现比较之 Angular</a></li>
+<li><a href="/2016/03/05/Angular-React-Vue-Rendering-2/" title="ARV 渲染实现比较之 React">ARV 渲染实现比较之 React</a></li>
+<li><a href="/2016/03/07/Angular-React-Vue-Rendering-3/" title="ARV 渲染实现比较之 Vue">ARV 渲染实现比较之 Vue</a></li>
+<li><a href="/2016/03/08/Angular-React-Vue-Rendering-4/" title="ARV 渲染实现比较总结">ARV 渲染实现比较总结</a></li>
+<li><a href="/2016/03/14/Mithril-Rendering/" title="ARV 渲染实现番外篇之 Mithril">ARV 渲染实现番外篇之 Mithril</a>
+</li>
+</ul>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+    
+  <!-- JiaThis Button BEGIN -->
+  <div class="jiathis_style_32x32">
+    <a class="jiathis_button_weixin"></a>
+    <a class="jiathis_button_tsina"></a>
+  	<a class="jiathis_button_qzone"></a>
+  	<a href="http://www.jiathis.com/share?uid=1589291" class="jiathis jtico jtico_jiathis" target="_blank"></a>
+  </div>
+  <script type="text/javascript">
+  var jiathis_config = {data_track_clickback:'true'};
+  </script>
+  <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1589291" charset="utf-8"></script>
+  <!-- JiaThis Button END -->
+
+
+  </footer>
+</article>
+
+
+  <link rel="stylesheet" href="http://static.duoshuo.com/styles/embed.default.css?349d9313.css">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="2016/03/05/Angular-React-Vue-Rendering-2/" data-title="ARV 渲染实现比较之 React" data-url="/2016/03/05/Angular-React-Vue-Rendering-2/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+    var duoshuoQuery = {
+      short_name: "sprabbit"
+    };
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';
+      ds.async = true;
+      ds.src = (document.location.protocol == 'https:'
+        ? 'https:'
+        : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+  <!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+          <div class="main-footer">
+  
+    © 2016 SPRABBIT - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+  <link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/PhotoSwipe/photoswipe.js"></script>
+  <script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+</body>
+</html>

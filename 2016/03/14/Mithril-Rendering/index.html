@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    ARV 渲染实现番外篇之 Mithril
+  
+</title>
+
+<meta name="description" content="这个系列本来没有打算去研究 Angular，React，Vue 之外的框架，但是 上次的性能测试 让 Mithril 这个框架格外引人注目，毕竟他的成绩超过了其他所有框架。因为我没有在项目中用过 Mithril，所以只能从其文档及代码中寻找他惊人能力背后的实现。因为这个是番外篇了，所以可能不会太严谨，科普性质吧。
+MithrilMithril 翻译过来就是秘银的意思，这是魔幻小说或游戏里面才有的虚">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ARV 渲染实现番外篇之 Mithril">
+<meta property="og:url" content="http://blog.sprabbit.com/2016/03/14/Mithril-Rendering/index.html">
+<meta property="og:site_name" content="SPRABBIT">
+<meta property="og:description" content="这个系列本来没有打算去研究 Angular，React，Vue 之外的框架，但是 上次的性能测试 让 Mithril 这个框架格外引人注目，毕竟他的成绩超过了其他所有框架。因为我没有在项目中用过 Mithril，所以只能从其文档及代码中寻找他惊人能力背后的实现。因为这个是番外篇了，所以可能不会太严谨，科普性质吧。
+MithrilMithril 翻译过来就是秘银的意思，这是魔幻小说或游戏里面才有的虚">
+<meta property="og:image" content="http://blog.sprabbit.com/2016/03/14/Mithril-Rendering/benchmark.png">
+<meta property="og:updated_time" content="2016-07-24T02:45:08.201Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ARV 渲染实现番外篇之 Mithril">
+<meta name="twitter:description" content="这个系列本来没有打算去研究 Angular，React，Vue 之外的框架，但是 上次的性能测试 让 Mithril 这个框架格外引人注目，毕竟他的成绩超过了其他所有框架。因为我没有在项目中用过 Mithril，所以只能从其文档及代码中寻找他惊人能力背后的实现。因为这个是番外篇了，所以可能不会太严谨，科普性质吧。
+MithrilMithril 翻译过来就是秘银的意思，这是魔幻小说或游戏里面才有的虚">
+<meta name="twitter:image" content="http://blog.sprabbit.com/2016/03/14/Mithril-Rendering/benchmark.png">
+
+
+  <link rel="alternative" href="/atom.xml" title="SPRABBIT" type="application/atom+xml">
+
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?d98dab13c098e2a1f6439b963347ad32";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+</head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">SPRABBIT</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+  <div class="header">
+    <h1 class="title"><a href="/">SPRABBIT</a></h1>
+    
+      <p class="subtitle">
+        菩提本无树，明镜亦非台；本来无一物，何处惹尘埃？
+      </p>
+    
+    <div class="info">
+      <div class="content">
+        
+          <div class="description">一个文艺技术的博客</div>
+        
+        
+          <div class="author">Kenneth</div>
+        
+      </div>
+      
+        <div class="avatar">
+          
+            <a href="/about"><img src="https://cn.gravatar.com/avatar/35fef74d731255cd569c2c2b0b9e87e4?s=200"></a>
+          
+        </div>
+      
+    </div>
+  </div>
+  <div class="body">
+    
+      
+        <ul class="nav">
+          
+            
+              <li class="category-list-container">
+                <a href="javascript:;">分类</a>
+                <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/社团/">社团</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">4</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="tag-list-container">
+                <a href="javascript:;">标签</a>
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACG/">ACG</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/">Angular</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LoveLive/">LoveLive</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mithril/">Mithril</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Octopress/">Octopress</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/作品/">作品</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/同人/">同人</a><span class="tag-list-count">4</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="archive-list-container">
+                <a href="javascript:;">归档</a>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/">2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/">2013</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/">2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/">2011</a><span class="archive-list-count">1</span></li></ul>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="/" title="主页">主页</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/archives" title="文章">文章</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/about" title="关于">关于</a>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="https://github.com/denjones/hexo-theme-chan" title="Chan" target="_blank" rel="external">Chan</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="https://github.com/denjones" title="Github" target="_blank" rel="external">Github</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/atom.xml" title="RSS">RSS</a>
+              </li>
+            
+          
+        </ul>
+      
+    
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="post-Mithril-Rendering" class="article article-type-post">
+  
+    <h1 class="article-header">
+      ARV 渲染实现番外篇之 Mithril
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2016-03-14
+</span>
+
+    
+	<span class="article-category tagcloud">
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+	</span>
+
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Angular/">Angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Javascript/">Javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mithril/">Mithril</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <p>这个系列本来没有打算去研究 <a href="https://angular.io" target="_blank" rel="external">Angular</a>，<a href="https://facebook.github.io/react" target="_blank" rel="external">React</a>，<a href="http://vuejs.org/" target="_blank" rel="external">Vue</a> 之外的框架，但是 <a href="/2016/03/08/Angular-React-Vue-Rendering-4/" title="上次的性能测试">上次的性能测试</a> 让 <a href="http://mithril.js.org/" target="_blank" rel="external">Mithril</a> 这个框架格外引人注目，毕竟他的成绩超过了其他所有框架。因为我没有在项目中用过 Mithril，所以只能从其文档及代码中寻找他惊人能力背后的实现。因为这个是番外篇了，所以可能不会太严谨，科普性质吧。</p>
+<h2 id="Mithril"><a href="#Mithril" class="headerlink" title="Mithril"></a>Mithril</h2><p>Mithril 翻译过来就是秘银的意思，这是魔幻小说或游戏里面才有的虚构金属物质，基本上是最好的金属，可以打造出最上等的武器装备。可能作者希望这个库就是那么厉害的东西，而且用 Mithril 做出来的产品也是上等的吧。他的第一个版本于 2014 年 3 月发布，相比 React （2013 年 5 月），Vue （2013 年 12 月），都要晚一点，而现在也只发布到 0.2.3 版本。</p>
+<a id="more"></a>
+<h3 id="Start-Up"><a href="#Start-Up" class="headerlink" title="Start Up"></a>Start Up</h3><p>Mithril 的启动代码大致如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> app = &#123;</div><div class="line">  controller: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;,</div><div class="line">  view: <span class="function"><span class="keyword">function</span>(<span class="params">ctrl</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      m(<span class="string">"body"</span>, [</div><div class="line">        m(<span class="string">"input"</span>),</div><div class="line">        m(<span class="string">"button"</span>, <span class="string">"Add"</span>)</div><div class="line">      ])</div><div class="line">    );</div><div class="line">  &#125;;</div><div class="line">&#125;;</div><div class="line">m.mount(<span class="built_in">document</span>.getElementById(<span class="string">"example"</span>), app);</div></pre></td></tr></table></figure>
+<p>思维敏锐的你一定看出来了，这结构跟 ReactComponent 不是差不多。实际上，连 Mithril 的书写格式都可以使用类似 JSX 这种预编译模版来写，他们称之为 <a href="https://github.com/insin/msx" target="_blank" rel="external">MSX</a> 是利用 React 的 JSX 改写而来的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> app = &#123;</div><div class="line">  controller: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;,</div><div class="line">  view: <span class="function"><span class="keyword">function</span>(<span class="params">ctrl</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      <span class="xml"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span></div><div class="line">        <span class="tag">&lt;<span class="name">input</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">button</span>&gt;</span>Add<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line">    );</div><div class="line">  &#125;;</div><div class="line">&#125;;</div><div class="line">m.mount(document.getElementById("example"), app);</div></pre></td></tr></table></figure>
+<h3 id="Virtual-DOM"><a href="#Virtual-DOM" class="headerlink" title="Virtual DOM"></a>Virtual DOM</h3><p>怎么会出现 Virtual DOM，没错，Mithril 确实是用 Virtual DOM 实现的，你完全可以按照 React 的 Virtual DOM 来理解 Mithril 的 Virtual DOM。对 Virtural 建议先去看我 <a href="/2016/03/05/Angular-React-Vue-Rendering-2/" title="关于 React 渲染的分析">关于 React 渲染的分析</a>。但是他们确实在细节上又有些不同。</p>
+<h3 id="Cell"><a href="#Cell" class="headerlink" title="Cell"></a>Cell</h3><p>cell 即是虚拟 DOM 元素，有一个 children 属性指定内部子元素，对应于 React 的 ReactElement。可以使用 <code>m</code> 命令创建：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">m(tag, attrs, children, ...);</div></pre></td></tr></table></figure>
+<p>Cell 可以是一个普通 DOM 元素或者一个 Component 实例。</p>
+<h3 id="Tag"><a href="#Tag" class="headerlink" title="Tag"></a>Tag</h3><p>代表一个 Cell 的类型，可以是一个查询字符串，类似 <code>div.classname#id[param=one][param2=two]</code>，或者一个 ComponentClass 对象。</p>
+<h3 id="ComponentClass"><a href="#ComponentClass" class="headerlink" title="ComponentClass"></a>ComponentClass</h3><p>ComponentClass 是一个自定义组件类对象，用于构造 Component 实例。包含 <code>view</code> 和 <code>controller</code> 属性，<code>view</code> 返回一个 Cell，而 <code>controller</code> 就像是一个初始化函数，将在第一次渲染前执行 ，在里面需要初始化 ViewModel：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> myComponent = &#123;</div><div class="line">  controller: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.data = m.prop()</div><div class="line">  &#125;,</div><div class="line">  view: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> m(<span class="string">"body"</span>)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Mithril 的 ComponentClass 对应于 React 的 ReactClass，<code>view</code> 对应于 <code>render</code>， <code>controller</code> 类似 <code>componentWillMount</code> 方法。而 controller 需要做的事情包括初始化 ViewModel，这又跟 ReactClass 的 <code>getInitialState</code> 类似。</p>
+<h3 id="CellCache"><a href="#CellCache" class="headerlink" title="CellCache"></a>CellCache</h3><p>是指一个根 Cell 的快照，他包含了其孩子 Cell 在内的一棵完整的虚拟 DOM 树，每一个根 Cell 在第一遍渲染的时候都会获得一个全局唯一的 CellCacheKey，并在每次 Redraw 的时候根据这个 Key 取出对应的虚拟 DOM 树与当前的虚拟 DOM 树进行对比，完成对比后再将当前虚拟 DOM 树创建快照并替换。CellCache 跟原本的 Cell 对象是不同的引用，CellCache 会比原始 Cell 对象多出来一个 <code>nodes</code> 属性，包含跟这个 Cell 关联的所有真实 DOM 元素。</p>
+<h3 id="Redraw"><a href="#Redraw" class="headerlink" title="Redraw"></a>Redraw</h3><p>Redraw 指的是 Mithril 的一遍渲染过程，他会执行一次对虚拟 DOM 数的自顶向下差异比较（diff），然后进行仅必要的 DOM 操作以重绘视图。</p>
+<p>Mithril 使用的 diff 算法跟 React 还是有一点区别的：</p>
+<p>元素级别的对比：</p>
+<ul>
+<li>若一个 Cell 没有被缓存（Cached），则创建元素并保存 CellCache</li>
+<li>若一个 Cell 有对应的 CellCache，并满足以下至少一项，则创建新 DOM 元素，否则在当前元素上做修改：<ul>
+<li>Tag 不一致</li>
+<li>属性名（attrs）有增减或改变</li>
+<li>id/key属性的值有改变</li>
+</ul>
+</li>
+<li>若一个 Cell 的父节点发生变化，则将自己绑定到新的父元素上</li>
+</ul>
+<p>列表级别的对比：</p>
+<ul>
+<li>为新列表中没有 Key 属性的元素创建全局唯一 Key</li>
+<li>若新列表中有，旧列表中没有的 Key，则标记为创建</li>
+<li>若新列表中有，旧列表中也有的 Key，则标记为移动</li>
+<li>若新列表中有，旧列表中没有的 Key，则标记为删除</li>
+<li>执行标记的 DOM 操作</li>
+</ul>
+<p>比较算法自顶向下递归地遍历对比每一个 Cell 与 CellCache 及其 children，并作出对应的 DOM 修改操作。</p>
+<h3 id="Redraw-时机"><a href="#Redraw-时机" class="headerlink" title="Redraw 时机"></a>Redraw 时机</h3><p>重绘会在组件 controller 执行后或事件触发后进行，也就是说自动的视图更新需要在 Mithril 的体系下进行，比如 <code>m.request</code>，<code>controller</code>，<code>onClick</code> 等，这与 Angular 类似。如果在体系外，比如使用 <code>setTimeout</code>，则需要在改变 ViewModel 的代码前后加上 <code>m.startComputation</code> 和 <code>m.endComputation</code> 这对计算标记：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  m.startComputation()</div><div class="line">  vm.update()</div><div class="line">  m.endComputation()</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>而实际上所有可以响应的 ViewModel 变动都是在 <code>m.startComputation</code> 和 <code>m.endComputation</code> 之间进行的， Mithril 体系内也是如此处理。一对计算标记内可以嵌套另外的计算标记对，重绘只会在嵌套最外层的 <code>m.endComputation</code> 调用后执行，这是通过计数器实现的，在调用 <code>m.startComputation</code> 时计数加一，调用 <code>m.endComputation</code> 时减一，当减为 0 时则会调用更低级的 <code>m.redraw</code> 方法。所以可以通过使用计算标记，可以保证将一系列连续的操作执行完毕后再进行重绘，避免在修改过程中因为异步操作引发的不必要的重绘操作。</p>
+<p>然而，调用 <code>m.redraw</code> 也并不一定真正进行重绘，Mithril 在重绘上采取了跟（游戏）渲染引擎类似的锁帧操作，即在一个预设好的时间段内的数据改变，延迟到时间段结束的时候再进行重绘。对于游戏一般需要 30-60fps 以上的刷新率才能算是连贯，而 Mithril 则采用了 60fps，即一个重绘周期为 1/60s，约为 16ms。</p>
+<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><p>如果 Mithril 只有 diff，那么他跟 React 的性能基本上是差不多的。Mithril 在性能上致胜的关键在于重绘时机的选取：</p>
+<ul>
+<li><code>m.startComputation</code> 和 <code>m.endComputation</code> 保证了在一次连续（异步）操作内不会促发重绘</li>
+<li>锁帧操作保证了在肉眼可感知到的变化周期内（16ms）不会重复渲染</li>
+</ul>
+<p>事实上我做了另外一个 <a href="http://jsperf.com/angular-vs-knockout-vs-ember/843" target="_blank" rel="external">性能对比测试</a>，与<a href="http://jsperf.com/angular-vs-knockout-vs-ember/842" target="_blank" rel="external">上一次测试不同</a>，我在 Mithril 的测试样本进行一遍变更后调用 <code>m.redraw(true)</code> 直接强制一遍重绘来取消锁帧的影响（这很公平，因为其他框架也可以应用这样的小技巧）。结果跟我想象中差不多：</p>
+<img src="/2016/03/14/Mithril-Rendering/benchmark.png" alt="benchmark.png" title="">
+<p>Mithril 的性能下降到 React 的一半左右。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>上面的测试结果可以看出来，单从 Virtual DOM 及 diff 算法上来说，Mithril 的效率并没有 React 高，但是 Mithril 仅仅使用了 2000 多行代码就实现了 Virtual DOM，甚至还包括 Router 在内的模块，致力于实现一个平台级的全能 MVC 框架。压缩后 20k 的大小相比 200k 以及需要额外库支持的 React，确实能省掉不少首次加载页面的时间。</p>
+<p>但是在我看来他也仅仅实现了 View-ViewModel 部分以及封装了网络请求，并没有真正实现 Model 部分。他的创新之处也就剩下基于帧的重绘时机控制，然而，这个办法或多或少都属于小手段，并不是在逻辑上真正提高渲染效率，只是利用了人类的极限视觉来节省运算。而且这一招并不是没人想到过，只是很多框架都不需要如此极致的效率提高，因为渲染速度一般并不会影响到体验（除非要显示上万条列表数据）。只有在性能出现瓶颈的时候，才需要去做这样那样的小手段，而很多其他框架实际上都是可以另外实现锁帧操作的。</p>
+<p>并没有很多人真的在用 Mithril 因为他跟 React 是如此类似（我甚至怀疑作者是不是看完 React 然后自己另外实现了一个），真的要在其中选大多数人也会选 React，毕竟社区健全完善，解决方案众多。但是 Mithril 给了我们很多灵感，比如 React 的代码量是不是可以更加精简，是不是可以通过锁帧进一步提高 React 的效率。</p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+    
+  <!-- JiaThis Button BEGIN -->
+  <div class="jiathis_style_32x32">
+    <a class="jiathis_button_weixin"></a>
+    <a class="jiathis_button_tsina"></a>
+  	<a class="jiathis_button_qzone"></a>
+  	<a href="http://www.jiathis.com/share?uid=1589291" class="jiathis jtico jtico_jiathis" target="_blank"></a>
+  </div>
+  <script type="text/javascript">
+  var jiathis_config = {data_track_clickback:'true'};
+  </script>
+  <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1589291" charset="utf-8"></script>
+  <!-- JiaThis Button END -->
+
+
+  </footer>
+</article>
+
+
+  <link rel="stylesheet" href="http://static.duoshuo.com/styles/embed.default.css?349d9313.css">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="2016/03/14/Mithril-Rendering/" data-title="ARV 渲染实现番外篇之 Mithril" data-url="/2016/03/14/Mithril-Rendering/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+    var duoshuoQuery = {
+      short_name: "sprabbit"
+    };
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';
+      ds.async = true;
+      ds.src = (document.location.protocol == 'https:'
+        ? 'https:'
+        : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+  <!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+          <div class="main-footer">
+  
+    © 2016 SPRABBIT - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+  <link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/PhotoSwipe/photoswipe.js"></script>
+  <script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+</body>
+</html>

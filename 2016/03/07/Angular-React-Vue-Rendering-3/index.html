@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    ARV 渲染实现比较之 Vue
+  
+</title>
+
+<meta name="description" content="之前已经分析了 Angular 和 React 的渲染：
+
+ARV 渲染实现比较之 Angular
+ARV 渲染实现比较之 React
+
+
+今天来分析 Vue。
+VueVue 是一个新兴的前端视图框架，他做的事情跟 React 很类似，实现了前端组件化以及 View-ViewModel 绑定，但是同时又支持跟 Angular 很类似的模版语法，以及比 Angular 更方便的 filter 和 d">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ARV 渲染实现比较之 Vue">
+<meta property="og:url" content="http://blog.sprabbit.com/2016/03/07/Angular-React-Vue-Rendering-3/index.html">
+<meta property="og:site_name" content="SPRABBIT">
+<meta property="og:description" content="之前已经分析了 Angular 和 React 的渲染：
+
+ARV 渲染实现比较之 Angular
+ARV 渲染实现比较之 React
+
+
+今天来分析 Vue。
+VueVue 是一个新兴的前端视图框架，他做的事情跟 React 很类似，实现了前端组件化以及 View-ViewModel 绑定，但是同时又支持跟 Angular 很类似的模版语法，以及比 Angular 更方便的 filter 和 d">
+<meta property="og:updated_time" content="2016-07-24T02:45:08.188Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ARV 渲染实现比较之 Vue">
+<meta name="twitter:description" content="之前已经分析了 Angular 和 React 的渲染：
+
+ARV 渲染实现比较之 Angular
+ARV 渲染实现比较之 React
+
+
+今天来分析 Vue。
+VueVue 是一个新兴的前端视图框架，他做的事情跟 React 很类似，实现了前端组件化以及 View-ViewModel 绑定，但是同时又支持跟 Angular 很类似的模版语法，以及比 Angular 更方便的 filter 和 d">
+
+
+  <link rel="alternative" href="/atom.xml" title="SPRABBIT" type="application/atom+xml">
+
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?d98dab13c098e2a1f6439b963347ad32";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+</head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">SPRABBIT</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+  <div class="header">
+    <h1 class="title"><a href="/">SPRABBIT</a></h1>
+    
+      <p class="subtitle">
+        菩提本无树，明镜亦非台；本来无一物，何处惹尘埃？
+      </p>
+    
+    <div class="info">
+      <div class="content">
+        
+          <div class="description">一个文艺技术的博客</div>
+        
+        
+          <div class="author">Kenneth</div>
+        
+      </div>
+      
+        <div class="avatar">
+          
+            <a href="/about"><img src="https://cn.gravatar.com/avatar/35fef74d731255cd569c2c2b0b9e87e4?s=200"></a>
+          
+        </div>
+      
+    </div>
+  </div>
+  <div class="body">
+    
+      
+        <ul class="nav">
+          
+            
+              <li class="category-list-container">
+                <a href="javascript:;">分类</a>
+                <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/社团/">社团</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">4</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="tag-list-container">
+                <a href="javascript:;">标签</a>
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACG/">ACG</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/">Angular</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LoveLive/">LoveLive</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mithril/">Mithril</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Octopress/">Octopress</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/作品/">作品</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/同人/">同人</a><span class="tag-list-count">4</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="archive-list-container">
+                <a href="javascript:;">归档</a>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/">2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/">2013</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/">2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/">2011</a><span class="archive-list-count">1</span></li></ul>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="/" title="主页">主页</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/archives" title="文章">文章</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/about" title="关于">关于</a>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="https://github.com/denjones/hexo-theme-chan" title="Chan" target="_blank" rel="external">Chan</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="https://github.com/denjones" title="Github" target="_blank" rel="external">Github</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/atom.xml" title="RSS">RSS</a>
+              </li>
+            
+          
+        </ul>
+      
+    
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="post-Angular-React-Vue-Rendering-3" class="article article-type-post">
+  
+    <h1 class="article-header">
+      ARV 渲染实现比较之 Vue
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2016-03-07
+</span>
+
+    
+	<span class="article-category tagcloud">
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+	</span>
+
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Angular/">Angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Javascript/">Javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <p>之前已经分析了 <a href="https://angular.io" target="_blank" rel="external">Angular</a> 和 <a href="https://facebook.github.io/react" target="_blank" rel="external">React</a> 的渲染：</p>
+<ul>
+<li><a href="/2016/03/02/Angular-React-Vue-Rendering-1/" title="ARV 渲染实现比较之 Angular">ARV 渲染实现比较之 Angular</a></li>
+<li><a href="/2016/03/05/Angular-React-Vue-Rendering-2/" title="ARV 渲染实现比较之 React">ARV 渲染实现比较之 React</a>
+</li>
+</ul>
+<p>今天来分析 <a href="http://vuejs.org/" target="_blank" rel="external">Vue</a>。</p>
+<h2 id="Vue"><a href="#Vue" class="headerlink" title="Vue"></a>Vue</h2><p>Vue 是一个新兴的前端视图框架，他做的事情跟 React 很类似，实现了前端组件化以及 View-ViewModel 绑定，但是同时又支持跟 Angular 很类似的模版语法，以及比 Angular 更方便的 filter 和 directive 定义方法，大大提高了开发效率。React 和 Angular 都熟悉的开发者转到 Vue 使用起来十分方便得心应手。</p>
+<p>如果只是 React 跟 Angular 两者优点的结合，那 Vue 也没那么出彩，然而他的渲染效率甚至是 React 的 10 倍之多，这也是很多开发者转向 Vue 的理由。</p>
+<a id="more"></a>
+<h3 id="Start-Up"><a href="#Start-Up" class="headerlink" title="Start Up"></a>Start Up</h3><p>Vue 的启动代码大致如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> exampleVM = <span class="keyword">new</span> Vue(&#123;</div><div class="line">  el: <span class="string">'#example-1'</span>,</div><div class="line">  data: exampleData</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>而定义一个 VueComponent 的代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 定义</span></div><div class="line"><span class="keyword">var</span> MyComponent = Vue.extend(&#123;</div><div class="line">  template: <span class="string">'&lt;div&gt;A custom component!&lt;/div&gt;'</span>,</div><div class="line">  data: &#123;&#125;</div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="comment">// 注册</span></div><div class="line">Vue.component(<span class="string">'my-component'</span>, MyComponent)</div></pre></td></tr></table></figure>
+<p>注册后就可以在 HTML 或其他模版中使用这个 VueComponent：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">my-component</span>&gt;</span><span class="tag">&lt;/<span class="name">my-component</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="Vue-实例"><a href="#Vue-实例" class="headerlink" title="Vue 实例"></a>Vue 实例</h3><p>无论直接使用 <code>new Vue()</code> 还是 <code>new MyComponent()</code> 还是在模版编译过程中使用 VueComponent  <code>&lt;my-component&gt;&lt;/my-component&gt;</code> 都会产生一个对应到 DOM 元素的 Vue 实例，这跟 React 的 ReactComponent 实例十分类似。</p>
+<p>每个 Vue 实例都有一个 <code>data</code> 属性，它相当于 Vue 的 ViewModel 部分，只有赋予到 <code>data</code> 的数据，才能在视图模版中被调用，这一点跟 React 的 state 十分相似。</p>
+<h3 id="模版编译"><a href="#模版编译" class="headerlink" title="模版编译"></a>模版编译</h3><p>在 Vue 实例化的过程中，会对模版（DOM 元素或者字符串模版，字符串模版会先转换成 DOM 元素）进行编译。这个过程跟 Angular 的 $compile 过程类似，他会递归地对所有普通元素的 directive 进行初始化，然后返回一个绑定函数，用于绑定 Vue 实例与初始化好的 DOM 元素。通过这个函数绑定 DOM 和 Vue 实例，就可以建立起 ViewModel 到 View 的关联。如果模版中使用了 VueComponent 子元素，那么这个 VueComponent 将会被实例化。</p>
+<h3 id="Watcher-amp-视图更新"><a href="#Watcher-amp-视图更新" class="headerlink" title="Watcher &amp; 视图更新"></a>Watcher &amp; 视图更新</h3><p>在 Vue 实例化的过程中会对 Vue 实例的 <code>data</code> 属性赋初值（data的值应该是一个对象），Vue 会遍历 <code>data</code> 对象的每一个属性，并将其转换成ES5 getter/setter。这是 Vue 能监听到 <code>data</code> 变化的前提。</p>
+<p>然后与 Angular 的 <code>$watch</code> 类似，Vue directive 初始化过程也需要创建对应的 Watcher，不过这些 Watcher 不需要用户手动去定义，Vue 会自动根据 params 和 directive 表达式来创建。如果这些监听的值发生变化，Watcher 就会调用 directive 的 <code>update</code> 方法，从而更新视图。所以基本上所有的视图更新操作都是在 <code>update</code> 方法中进行，一个 directive 的定义方式如下，相比 Angular 要简单许多：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Vue.directive(<span class="string">'my-directive'</span>, &#123;</div><div class="line">  bind: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// do preparation work</span></div><div class="line">  &#125;,</div><div class="line">  update: <span class="function"><span class="keyword">function</span> (<span class="params">newValue, oldValue</span>) </span>&#123;</div><div class="line">    <span class="comment">// do something based on the updated value</span></div><div class="line">  &#125;,</div><div class="line">  unbind: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// do clean up work</span></div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>到目前为止 Watcher 的行为都跟 Angular 类似，但是 Watcher 怎么监听到表达式的变化呢，难道像 Angular 一样进行 dirty-check？上面提到 Vue 实例化时会为 <code>data</code> 的属性创建 getter/setter，这是利用了 ES5 的 defineProperty 特性。当然这些 getter/setter 并不是简单的读写值，当 Watcher 进行表达式的第一次求值运算时，每接触一个 getter/setter，这个 getter/setter，就会将这个属性记录到 Watcher 的依赖列表。之后若这个属性的值被改变，那就意味着这个属性的 setter 将被调用。setter 设值后将调用依赖到这个属性的 Watcher 重新求值，这就可以监听到表达式的变化并触发视图更新。</p>
+<p>这就是 Vue 对实例化后再添加的 <code>data</code> 属性无法响应的原因，虽然可以通过 Vue 实例的 <code>$set</code> 方法添加新的属性，但是这将导致所有跟这个 <code>data</code> 有依赖关系的 Watcher 重新求值，所以还是预先定义好 <code>data</code> 的属性比较靠谱。</p>
+<h3 id="异步更新"><a href="#异步更新" class="headerlink" title="异步更新"></a>异步更新</h3><p>实际上 <code>update</code> 方法的调用是异步的，因为 Watcher 可能依赖到多个数据更新，如果每个数据更新都调用 <code>update</code> 方法会导致同一个 <code>update</code> 方法调用多次，而只有最后一次的 <code>update</code> 的结果才是需要的。 为了解决这个问题 Vue 会维护一个异步更新队列，并进行去重后再进行更新。因此对 <code>data</code> 并不会马上更新到视图，而只会在下一个心跳（setTimeout）更新，这跟 Angular 中对 <code>$scope</code> 修改又是类似的。</p>
+<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><p>Vue 的性能可以说是无可挑剔的，利用 ES5 的 defineProperty 特性，准确而直接地响应了数据的变更，当且仅当必须更新视图时，才会去更新渲染，直截了当。一般情况下无需担心 Vue 的性能问题，只要渲染集合数据时，如果对整个集合引用进行替换，他跟 Angular 会有同样的问题，无法得知变动前后集合元素的对应关系，但这同样的可以通过添加 <code>track-by</code> 指定一个元素的稳定 id 来解决。而且 Vue 压缩后的大小是 Angular，React 之中最小的，同样提高了加载速度。但是跟 React 差不多，他只是一个 View-ViewModel 库，如果需要加入 Model 部分，可能还要引入 Redux，Vuex 之类的库。当然，使用 plain object 也是可以的，我在一个项目中为了追求简便就是这么干的。</p>
+<p>然而使用 ES5 的特性提高了性能也成为了 Vue 的短板，他无法支持 IE8 及不支持 ES5 defineProperty 特性的浏览器，这个特性也没法通过 polyfill 来补救，而兼容 IE8 恰好是 Angular 跟 React 都做到的。由于比较新 Vue 的插件也是比较少的，但是简单的语法让我们重新造轮子也非常得心应手，相比之下如果你让我在 Angular 下面造轮子，我还得去重新理解一遍他的概念，认真比对文档，生怕语法有什么弄错了。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>相比于 Angular 和 React，我这篇写的实在太短了，因为他的概念简单而熟悉，性能也没有多大问题，如果不需要支持 IE8 以下，无疑是个好的选择。如果需要开发手机端 WEB 应用应该可以毫无顾虑地用 Vue 了。</p>
+<p>至此 ARV 渲染实现比较即将完结了，总结留到下一期。</p>
+<p>文章链接：</p>
+<ul>
+<li><a href="/2016/03/02/Angular-React-Vue-Rendering-1/" title="ARV 渲染实现比较之 Angular">ARV 渲染实现比较之 Angular</a></li>
+<li><a href="/2016/03/05/Angular-React-Vue-Rendering-2/" title="ARV 渲染实现比较之 React">ARV 渲染实现比较之 React</a></li>
+<li><a href="/2016/03/07/Angular-React-Vue-Rendering-3/" title="ARV 渲染实现比较之 Vue">ARV 渲染实现比较之 Vue</a></li>
+<li><a href="/2016/03/08/Angular-React-Vue-Rendering-4/" title="ARV 渲染实现比较总结">ARV 渲染实现比较总结</a></li>
+<li><a href="/2016/03/14/Mithril-Rendering/" title="ARV 渲染实现番外篇之 Mithril">ARV 渲染实现番外篇之 Mithril</a>
+</li>
+</ul>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+    
+  <!-- JiaThis Button BEGIN -->
+  <div class="jiathis_style_32x32">
+    <a class="jiathis_button_weixin"></a>
+    <a class="jiathis_button_tsina"></a>
+  	<a class="jiathis_button_qzone"></a>
+  	<a href="http://www.jiathis.com/share?uid=1589291" class="jiathis jtico jtico_jiathis" target="_blank"></a>
+  </div>
+  <script type="text/javascript">
+  var jiathis_config = {data_track_clickback:'true'};
+  </script>
+  <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1589291" charset="utf-8"></script>
+  <!-- JiaThis Button END -->
+
+
+  </footer>
+</article>
+
+
+  <link rel="stylesheet" href="http://static.duoshuo.com/styles/embed.default.css?349d9313.css">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="2016/03/07/Angular-React-Vue-Rendering-3/" data-title="ARV 渲染实现比较之 Vue" data-url="/2016/03/07/Angular-React-Vue-Rendering-3/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+    var duoshuoQuery = {
+      short_name: "sprabbit"
+    };
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';
+      ds.async = true;
+      ds.src = (document.location.protocol == 'https:'
+        ? 'https:'
+        : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+  <!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+          <div class="main-footer">
+  
+    © 2016 SPRABBIT - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+  <link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/PhotoSwipe/photoswipe.js"></script>
+  <script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+</body>
+</html>

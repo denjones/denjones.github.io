@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    Javascript备忘
+  
+</title>
+
+<meta name="description" content="这个系列只是一个备忘录，主要是讲述平时编程遇到的一些奇怪的问题。本来标题叫做Javascript奇技淫巧系列，但是现在我又被掉往服务端开发了，所以这个系列可能会不再更新，于是改回Javascript备忘。其实这种奇怪的问题一般都出在IE上，所以重点就放在IE上了。
+这次的主题是图片拖拽的问题，主要情景有几种，第一种是可以在网页上面拖拽的图片，另一种是在可拖动的元素下面有一张图。当然还有一种是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript备忘">
+<meta property="og:url" content="http://blog.sprabbit.com/2013/08/22/javascript-memo-1/index.html">
+<meta property="og:site_name" content="SPRABBIT">
+<meta property="og:description" content="这个系列只是一个备忘录，主要是讲述平时编程遇到的一些奇怪的问题。本来标题叫做Javascript奇技淫巧系列，但是现在我又被掉往服务端开发了，所以这个系列可能会不再更新，于是改回Javascript备忘。其实这种奇怪的问题一般都出在IE上，所以重点就放在IE上了。
+这次的主题是图片拖拽的问题，主要情景有几种，第一种是可以在网页上面拖拽的图片，另一种是在可拖动的元素下面有一张图。当然还有一种是">
+<meta property="og:image" content="http://blog.sprabbit.com/images/jsmemo/enako.jpg">
+<meta property="og:image" content="http://blog.sprabbit.com/images/jsmemo/enako.jpg">
+<meta property="og:image" content="http://blog.sprabbit.com/images/jsmemo/scene.jpg">
+<meta property="og:image" content="http://blog.sprabbit.com/images/jsmemo/scene.jpg">
+<meta property="og:image" content="http://blog.sprabbit.com/images/jsmemo/scene.jpg">
+<meta property="og:updated_time" content="2016-07-24T02:45:08.157Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Javascript备忘">
+<meta name="twitter:description" content="这个系列只是一个备忘录，主要是讲述平时编程遇到的一些奇怪的问题。本来标题叫做Javascript奇技淫巧系列，但是现在我又被掉往服务端开发了，所以这个系列可能会不再更新，于是改回Javascript备忘。其实这种奇怪的问题一般都出在IE上，所以重点就放在IE上了。
+这次的主题是图片拖拽的问题，主要情景有几种，第一种是可以在网页上面拖拽的图片，另一种是在可拖动的元素下面有一张图。当然还有一种是">
+<meta name="twitter:image" content="http://blog.sprabbit.com/images/jsmemo/enako.jpg">
+
+
+  <link rel="alternative" href="/atom.xml" title="SPRABBIT" type="application/atom+xml">
+
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?d98dab13c098e2a1f6439b963347ad32";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+</head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">SPRABBIT</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+  <div class="header">
+    <h1 class="title"><a href="/">SPRABBIT</a></h1>
+    
+      <p class="subtitle">
+        菩提本无树，明镜亦非台；本来无一物，何处惹尘埃？
+      </p>
+    
+    <div class="info">
+      <div class="content">
+        
+          <div class="description">一个文艺技术的博客</div>
+        
+        
+          <div class="author">Kenneth</div>
+        
+      </div>
+      
+        <div class="avatar">
+          
+            <a href="/about"><img src="https://cn.gravatar.com/avatar/35fef74d731255cd569c2c2b0b9e87e4?s=200"></a>
+          
+        </div>
+      
+    </div>
+  </div>
+  <div class="body">
+    
+      
+        <ul class="nav">
+          
+            
+              <li class="category-list-container">
+                <a href="javascript:;">分类</a>
+                <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/社团/">社团</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">4</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="tag-list-container">
+                <a href="javascript:;">标签</a>
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACG/">ACG</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/">Angular</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LoveLive/">LoveLive</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mithril/">Mithril</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Octopress/">Octopress</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/作品/">作品</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/同人/">同人</a><span class="tag-list-count">4</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="archive-list-container">
+                <a href="javascript:;">归档</a>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/">2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/">2013</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/">2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/">2011</a><span class="archive-list-count">1</span></li></ul>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="/" title="主页">主页</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/archives" title="文章">文章</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/about" title="关于">关于</a>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="https://github.com/denjones/hexo-theme-chan" title="Chan" target="_blank" rel="external">Chan</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="https://github.com/denjones" title="Github" target="_blank" rel="external">Github</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/atom.xml" title="RSS">RSS</a>
+              </li>
+            
+          
+        </ul>
+      
+    
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="post-javascript-memo-1" class="article article-type-post">
+  
+    <h1 class="article-header">
+      Javascript备忘
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2013-08-22
+</span>
+
+    
+	<span class="article-category tagcloud">
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+	</span>
+
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Javascript/">Javascript</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <p><link rel="stylesheet" href="/styles/2013-08-22-javascript-memo-1/imagecrop.css" type="text/css"></p>
+<link rel="stylesheet" href="/styles/2013-08-22-javascript-memo-1/photodrag.css" type="text/css">
+
+<p>这个系列只是一个备忘录，主要是讲述平时编程遇到的一些奇怪的问题。<br>本来标题叫做Javascript奇技淫巧系列，但是现在我又被掉往服务端开发了，所以这个系列可能会不再更新，于是改回Javascript备忘。<br>其实这种奇怪的问题一般都出在IE上，所以重点就放在IE上了。</p>
+<p>这次的主题是图片拖拽的问题，主要情景有几种，第一种是可以在网页上面拖拽的图片，另一种是在可拖动的元素下面有一张图。<br>当然还有一种是浏览器默认的图片拖拽，使用浏览器默认的图片拖拽可以直接将图片拖出浏览器，在新网页中打开，或者拖到其他软件中处理。<br>但是，往往我们都不希望出现默认的情况，尤其是想制造出前面两种效果的时候。</p>
+<a id="more"></a>
+<h2 id="可以在网页上面拖拽的图片"><a href="#可以在网页上面拖拽的图片" class="headerlink" title="可以在网页上面拖拽的图片"></a>可以在网页上面拖拽的图片</h2><p>下面这里有一个例子:</p>
+<div class="photo"><br>    <img class="photo_drag" src="/images/jsmemo/enako.jpg" alt="enako"><br></div>
+
+<p>点击图片可以拖动，如果你在IE之外支持canvas的浏览器中打开，还会有旋转的效果。<br>但是，如果只添加了拖动相关的代码的话，一开始会是下面这样：</p>
+<div class="photo"><br>    <img src="/images/jsmemo/enako.jpg" alt="enako"><br></div>
+
+<p>没错，就跟没添加没什么区别（实际上我懒得再写一份没做处理的javascript了，所以上面这个确实没添加-_-|||，嘛效果是一样的）。</p>
+<p>好了，区别在于前者在处理在图片上的<code>mousedown</code>事件时，做了如下操作:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">e.preventDefault();</div><div class="line">e.stopPropagation();</div></pre></td></tr></table></figure>
+<p><code>e</code>是传进jQuery事件处理函数的jQuery事件参数，前者阻止了浏览器使用默认方法对事件的处理，后者阻止事件冒泡。<br>于是事件传递到此结束，浏览器也就不会产生拖拽图片的操作。<br>其他浏览器事件都支持preventDefault()方法，IE是比较奇淫的，通过返回值来判断是否执行默认操作。<br>所以jQuery事件的preventDefault()方法类似下面：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> e = <span class="keyword">this</span>.originalEvent;</div><div class="line"></div><div class="line"><span class="keyword">this</span>.isDefaultPrevented = returnTrue;</div><div class="line"><span class="keyword">if</span> ( !e ) &#123;</div><div class="line">	<span class="keyword">return</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// If preventDefault exists, run it on the original event</span></div><div class="line"><span class="keyword">if</span> ( e.preventDefault ) &#123;</div><div class="line">	e.preventDefault();</div><div class="line"></div><div class="line"><span class="comment">// Support: IE</span></div><div class="line"><span class="comment">// Otherwise set the returnValue property of the original event to false</span></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">	e.returnValue = <span class="literal">false</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>而停止冒泡基本就是方法名不一样了。</p>
+<h2 id="可以在图片上面拖拽的元素"><a href="#可以在图片上面拖拽的元素" class="headerlink" title="可以在图片上面拖拽的元素"></a>可以在图片上面拖拽的元素</h2><p>上面的解决方案可能很多人都知道。<br>不过在图片上拖拽元素这个可能就比较少实现。<br>一个比较常见的应用就是截图插件：</p>
+
+<div id="photo">
+	<img id="scene" src="/images/jsmemo/scene.jpg" alt="scene">
+</div>
+
+<p>如果你想做出来选中内容跟未选中内容表现得不一样的效果，如上面的模糊与清晰的差别，那么很幸运，你将不会遇到奇怪的问题。<br>一旦你选择做出下面这种没有差别的效果，那就跪了，在IE你几乎无法移动那个小框（点小框的边框就可以）。</p>
+
+<div id="photo2">
+	<img id="scene2" src="/images/jsmemo/scene.jpg" alt="scene">
+</div>
+
+<p>一开始我百思不得其解，因为点选框内，却产生了默认拖拽图片的操作，于是按上面的方法来修改onmouse事件，却无效。<br>最令人想不明白的是，明明小框显示在图片之上，为什么图片反而拦截到了点击事件？</p>
+<p>其实答案却非常简单，只要仔细想想为什么点小框的边框就可以移动就明白了，点小框可以移动，证明小框获取消息的等级确实是比背景图要高。<br>而点击中间部分却无法移动，因为我们没有点到小框上的任何东西！是真的没有任何东西，直接穿透了小框，点到了图片上。<br>然后你就会发现，在IE中，原来元素里面没有任何东西，包括背景的话，点击的消息传递时是会直接跳过这个元素的。<br>IE在这里耍了点小聪明，以为这样可以方便消息的穿透，谁知道却适得其反。<br>不过好在解决方法是简单的，希望保持透明的话，加一层透明的背景就行了，这就不是没内容，而只是内容看不见而已。</p>
+
+<div id="photo3">
+	<img id="scene3" src="/images/jsmemo/scene.jpg" alt="scene">
+</div>
+
+<p>而第一个效果分离的截图插件之所以不会遇到问题是因为这种效果一般是在小框内再包含一幅图像来实现的，就不再是透明的小框了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实这里还有一个技巧，就是实现模糊效果的方法。<br>目前只有Chrome支持高斯模糊滤镜，为了在其他浏览器实现模糊效果，只能进行模拟。<br>我们知道高斯模糊可以通过横向模糊加纵向模糊叠加实现，于是我们就可以用多张半透明图像进行错位叠加实现。</p>
+<p>总而言之，在做前端开发中会遇到很多神奇的问题，以后我将一一记录在这里。另外吐槽一下，IE你为什么那么傲娇啊，看到IE就想哭啊有木有啊。</p>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/scripts/2013-08-22-javascript-memo-1/jquery.photodrag.js"></script>
+<script src="/scripts/2013-08-22-javascript-memo-1/photodrag.js"></script>
+<script src="http://apps.bdimg.com/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+<script src="/scripts/2013-08-22-javascript-memo-1/jquery.imagecrop.js"></script>
+<script src="/scripts/2013-08-22-javascript-memo-1/imagecrop.js"></script>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+    
+  <!-- JiaThis Button BEGIN -->
+  <div class="jiathis_style_32x32">
+    <a class="jiathis_button_weixin"></a>
+    <a class="jiathis_button_tsina"></a>
+  	<a class="jiathis_button_qzone"></a>
+  	<a href="http://www.jiathis.com/share?uid=1589291" class="jiathis jtico jtico_jiathis" target="_blank"></a>
+  </div>
+  <script type="text/javascript">
+  var jiathis_config = {data_track_clickback:'true'};
+  </script>
+  <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1589291" charset="utf-8"></script>
+  <!-- JiaThis Button END -->
+
+
+  </footer>
+</article>
+
+
+  <link rel="stylesheet" href="http://static.duoshuo.com/styles/embed.default.css?349d9313.css">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="2013/08/22/javascript-memo-1/" data-title="Javascript备忘" data-url="/2013/08/22/javascript-memo-1/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+    var duoshuoQuery = {
+      short_name: "sprabbit"
+    };
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';
+      ds.async = true;
+      ds.src = (document.location.protocol == 'https:'
+        ? 'https:'
+        : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+  <!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+          <div class="main-footer">
+  
+    © 2016 SPRABBIT - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+  <link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/PhotoSwipe/photoswipe.js"></script>
+  <script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+</body>
+</html>

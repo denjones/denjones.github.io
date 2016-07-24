@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    从游戏服务端到Web前端
+  
+</title>
+
+<meta name="description" content="虽然这个标题看起来很厉害，但是其实只是我的一篇随笔，没有很大的技术参考价值，况且我无论哪个方面也没有很高的造诣。这里只是抒发一下我开始工作后的感受，在这个公司提前下班的七夕里。
+怀着对游戏的满腔热情，我拿到了一个主营网络游戏的公司的Offer，心想，迎合我的兴趣和特长，我一定能成就一番事业。于是我在几个月前开始了实习，刚开始是一段自学期，因为公司用python作为游戏脚本，而且推荐教材是《Pyth">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从游戏服务端到Web前端">
+<meta property="og:url" content="http://blog.sprabbit.com/2013/08/13/game-server-to-front-end/index.html">
+<meta property="og:site_name" content="SPRABBIT">
+<meta property="og:description" content="虽然这个标题看起来很厉害，但是其实只是我的一篇随笔，没有很大的技术参考价值，况且我无论哪个方面也没有很高的造诣。这里只是抒发一下我开始工作后的感受，在这个公司提前下班的七夕里。
+怀着对游戏的满腔热情，我拿到了一个主营网络游戏的公司的Offer，心想，迎合我的兴趣和特长，我一定能成就一番事业。于是我在几个月前开始了实习，刚开始是一段自学期，因为公司用python作为游戏脚本，而且推荐教材是《Pyth">
+<meta property="og:updated_time" content="2016-07-24T02:45:08.122Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从游戏服务端到Web前端">
+<meta name="twitter:description" content="虽然这个标题看起来很厉害，但是其实只是我的一篇随笔，没有很大的技术参考价值，况且我无论哪个方面也没有很高的造诣。这里只是抒发一下我开始工作后的感受，在这个公司提前下班的七夕里。
+怀着对游戏的满腔热情，我拿到了一个主营网络游戏的公司的Offer，心想，迎合我的兴趣和特长，我一定能成就一番事业。于是我在几个月前开始了实习，刚开始是一段自学期，因为公司用python作为游戏脚本，而且推荐教材是《Pyth">
+
+
+  <link rel="alternative" href="/atom.xml" title="SPRABBIT" type="application/atom+xml">
+
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?d98dab13c098e2a1f6439b963347ad32";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+</head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">SPRABBIT</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+  <div class="header">
+    <h1 class="title"><a href="/">SPRABBIT</a></h1>
+    
+      <p class="subtitle">
+        菩提本无树，明镜亦非台；本来无一物，何处惹尘埃？
+      </p>
+    
+    <div class="info">
+      <div class="content">
+        
+          <div class="description">一个文艺技术的博客</div>
+        
+        
+          <div class="author">Kenneth</div>
+        
+      </div>
+      
+        <div class="avatar">
+          
+            <a href="/about"><img src="https://cn.gravatar.com/avatar/35fef74d731255cd569c2c2b0b9e87e4?s=200"></a>
+          
+        </div>
+      
+    </div>
+  </div>
+  <div class="body">
+    
+      
+        <ul class="nav">
+          
+            
+              <li class="category-list-container">
+                <a href="javascript:;">分类</a>
+                <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/社团/">社团</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">4</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="tag-list-container">
+                <a href="javascript:;">标签</a>
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACG/">ACG</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/">Angular</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LoveLive/">LoveLive</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mithril/">Mithril</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Octopress/">Octopress</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/作品/">作品</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/同人/">同人</a><span class="tag-list-count">4</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="archive-list-container">
+                <a href="javascript:;">归档</a>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/">2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/">2013</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/">2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/">2011</a><span class="archive-list-count">1</span></li></ul>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="/" title="主页">主页</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/archives" title="文章">文章</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/about" title="关于">关于</a>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="https://github.com/denjones/hexo-theme-chan" title="Chan" target="_blank" rel="external">Chan</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="https://github.com/denjones" title="Github" target="_blank" rel="external">Github</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/atom.xml" title="RSS">RSS</a>
+              </li>
+            
+          
+        </ul>
+      
+    
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="post-game-server-to-front-end" class="article article-type-post">
+  
+    <h1 class="article-header">
+      从游戏服务端到Web前端
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2013-08-13
+</span>
+
+    
+	<span class="article-category tagcloud">
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/随笔/">随笔</a></li></ul>
+	</span>
+
+
+    
+
+  </div>
+  <div class="article-entry">
+    <p>虽然这个标题看起来很厉害，但是其实只是我的一篇随笔，没有很大的技术参考价值，况且我无论哪个方面也没有很高的造诣。这里只是抒发一下我开始工作后的感受，在这个公司提前下班的七夕里。</p>
+<p>怀着对游戏的满腔热情，我拿到了一个主营网络游戏的公司的Offer，心想，迎合我的兴趣和特长，我一定能成就一番事业。于是我在几个月前开始了实习，刚开始是一段自学期，因为公司用python作为游戏脚本，而且推荐教材是《Python核心编程》，于是前两周便都在啃那本书。然后是一个考核，决定我们这帮新来的程序猿将进入哪个项目组。我灰常荣幸地进入了公司最赚钱的游戏的服务端，顺便说一下在公司里对程序猿的划分从牛掰到水逼是服务端&gt;客户端&gt;应用软件&gt;移动平台游戏&gt;WEB，当然这只是由公司文化决定的。</p>
+<a id="more"></a>
+<p>然而我的想象很快就被扑灭了，作为一个服务端的程序员，你要做的只有根据策划提出的要求，写逻辑写逻辑写逻辑。如果这是一个独立游戏，我想最有趣的地方就是写逻辑了吧，然而对于网游来说却并不是这样的。</p>
+<p>这是一个已经完全引擎化的东西，基本上公司所有游戏都是用的同一个引擎，服务器引擎基本上只定义了客户端与服务端通信的方法以及数据库存储的抽象化。因此逻辑与显示被完全分离了，显示完全就是客户端做的事情，逻辑完全属于服务端，两者之间只是通过socket来相互传递命令。如果只是这样的话还不错的，逻辑与显示分离一直是很多框架所追求的，然而基本的脚本框架也都基本是从一个游戏拷贝到另一个游戏中的，所以程序员能做的基本上只是往框架里面填东西。明明可以使用更好的设计模式，更好的结构，但是为了让你从一个项目组调到另一个项目组时能很快进入状态，这些都是不允许你去改的。</p>
+<p>于是随着功能的添加，局部代码只能越来越臃肿，甚至臃肿到可读性已经基本没有的程度。最后只好不再给你将一些通用的功能添加到父类里，而在子类里特殊地实现，目的只是不再降低通用部分的可读性。他们对“代码即文档”这句话痴迷到近乎疯狂的地步，甚至不允许你多写注释。</p>
+<p>那么，所谓的写逻辑，就只能是一些很简单的往框架里填的逻辑，比如某人到某地触发一些什么对白，触发什么战斗，战斗后有什么奖励，收集一些什么物品，或者将这些东西组合起来做成一个任务或者活动。尽管你可以将这些东西写得很面向对象，然而这只是脚本，你写得面向对象并不是因为可扩展性好，而是可读性好，让别人更能读懂你的代码，当然这减少了你的代码量，也是一件好事。底层引擎你是不可能去接触到的，对所有普通员工来说都是闭源的，所以你只要掌握了这个写一般脚本的能力，你可以很轻松，不需要再学什么新技术，也能在这里呆个10年左右，因为技术以及架构都几乎不可能再更新了。作为一门脚本，除了bug的修复，也不需要什么更新。当然，首先你要去读懂那些没有文档，也没有注释的只能祈祷他不再用拼音命名的“即文档”的代码。</p>
+<p>尽管在公司里面认为在越能赚钱的项目做越牛掰，而且公司也会将提升的程序员调往更赚钱的项目，而将更有资历的程序员调往新项目，然而一个游戏能否赚钱，实际上跟他的技术甚至程序员没有绝对的联系。因为每个游戏的技术基本是一样的！从引擎到框架，也许只有战斗系统和技能系统有所不同，但是这并不是由程序猿决定的事情，而是策划。换而言之决定一个游戏赚不赚钱是由策划决定的，而你在这样一个最赚钱的项目组里做，你面对的挑战只是更多更多更多的策划需求，而不是运用更好的技术。</p>
+<p>很多业内人士都觉得游戏行业不是IT行业，一开始我很鄙视这种说法，凭什么我们运用程序设计的技术来创造虚拟世界就不是IT了呢。然而，我终于体会到，网游这种东西只是刚好用到编程的营销而已，不但技术落后，而且不思进取。我当然可以选择在这里干上十年，到时我也能成为一个富裕的人吧，仅仅是金钱上的，没有业余爱好，没有技术，没有时间，没有妹纸。。。一旦这个行业被淘汰，我必将失业，因为我只会写一定逻辑范围内的脚本，而这种技能除了在本公司之外几乎没有用武之地。</p>
+<p>然而实习期间，我也没啥怨念的，仅仅是用来长经验的，越来越多同期的实习生被往下调到其他项目、客户端、还有WEB。最后我成为了基本被组长认同的实习生之一。但是正式入职第二天我想到我的将来，提出了转职，转往网站部从事网站开发。这当然是个令组长甚至主管都震惊的决定，没有资格留下来的人被调往网站部，而一个及格个人却主动申请调往网站部。他们甚至因此而添加了一条入职未满一年的人禁止提出转职的规定。他们用来挽留我的理由除了钱、还是钱，但是我知道有很多东西是无法用钱来衡量的。我花了九牛二虎之力东拉西扯两天后终于让他们让我转职了。</p>
+<p>衡量之后，我发现做网站是比较符合我的情况，而且可以直接接触到最新的技术。比起后端也是基本逻辑加数据操作，我还是觉得比较有设计感的前端更适合我这个游戏制作人，于是我选择了做前端JS。我觉得这个职位还是比较多元化的，虽然只写JS，但是涉及的方面也可以很广泛，从页面逻辑，到页面特效，从前端JS到后台也可以用JS（Node），从PC到移动端，从数据交换到数据渲染，从页面功能到用户体验，JS能做到的东西比我想象中要多很多。可惜JS程序员在公司的地位没有得到重视，专注于前端的程序员不多，也没有统一规范，不过好消息是公司将越来越重视这一方面，将前端JS从后台人员自己编写中分离出来，我转职后不久便要我起草一份Javascript编程规范，包括命名、语法、文档注释、面向对象、前端模板等的规范。所以我还是觉得能转到前端还是挺不错的。</p>
+<p>最重要的一点是，我有了自己的时间，有了外网机！在服务端为了防止泄密，是没有外网机的，用一台内网机你甚至见不到机箱，所以除了工作之外，你在公司几乎干不了别的事情，技术不会更新，只要懂了基本语法，基本不需要到网上查资料，加班即使没事干，也只能玩自己的游戏项目。为了坚持我的同人创作，我觉得外网机是基本的条件。</p>
+<p>以后可能会陆续发些关于前端的文章吧，虽然以前我也没发过什么技术文章，主要是技术太烂拿不出手，今后就以学习交流的态度来写些东西吧。</p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+    
+  <!-- JiaThis Button BEGIN -->
+  <div class="jiathis_style_32x32">
+    <a class="jiathis_button_weixin"></a>
+    <a class="jiathis_button_tsina"></a>
+  	<a class="jiathis_button_qzone"></a>
+  	<a href="http://www.jiathis.com/share?uid=1589291" class="jiathis jtico jtico_jiathis" target="_blank"></a>
+  </div>
+  <script type="text/javascript">
+  var jiathis_config = {data_track_clickback:'true'};
+  </script>
+  <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1589291" charset="utf-8"></script>
+  <!-- JiaThis Button END -->
+
+
+  </footer>
+</article>
+
+
+  <link rel="stylesheet" href="http://static.duoshuo.com/styles/embed.default.css?349d9313.css">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="2013/08/13/game-server-to-front-end/" data-title="从游戏服务端到Web前端" data-url="/2013/08/13/game-server-to-front-end/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+    var duoshuoQuery = {
+      short_name: "sprabbit"
+    };
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';
+      ds.async = true;
+      ds.src = (document.location.protocol == 'https:'
+        ? 'https:'
+        : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+  <!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+          <div class="main-footer">
+  
+    © 2016 SPRABBIT - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+  <link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/PhotoSwipe/photoswipe.js"></script>
+  <script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    Dust.js语法简介（一）
+  
+</title>
+
+<meta name="description" content="经过一轮挣扎，我作出了与LinkedIn一样的选择，使用Dust.js作为模板，但是因为Dust.js缺少中文文档，导致在国内的普及率比较低。于是我决定在这里对Dust的语法进行一些必要的介绍。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dust.js语法简介（一）">
+<meta property="og:url" content="http://blog.sprabbit.com/2013/08/16/introduction-dustjs-1/index.html">
+<meta property="og:site_name" content="SPRABBIT">
+<meta property="og:description" content="经过一轮挣扎，我作出了与LinkedIn一样的选择，使用Dust.js作为模板，但是因为Dust.js缺少中文文档，导致在国内的普及率比较低。于是我决定在这里对Dust的语法进行一些必要的介绍。">
+<meta property="og:updated_time" content="2016-07-24T02:45:08.134Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dust.js语法简介（一）">
+<meta name="twitter:description" content="经过一轮挣扎，我作出了与LinkedIn一样的选择，使用Dust.js作为模板，但是因为Dust.js缺少中文文档，导致在国内的普及率比较低。于是我决定在这里对Dust的语法进行一些必要的介绍。">
+
+
+  <link rel="alternative" href="/atom.xml" title="SPRABBIT" type="application/atom+xml">
+
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?d98dab13c098e2a1f6439b963347ad32";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+</head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">SPRABBIT</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+  <div class="header">
+    <h1 class="title"><a href="/">SPRABBIT</a></h1>
+    
+      <p class="subtitle">
+        菩提本无树，明镜亦非台；本来无一物，何处惹尘埃？
+      </p>
+    
+    <div class="info">
+      <div class="content">
+        
+          <div class="description">一个文艺技术的博客</div>
+        
+        
+          <div class="author">Kenneth</div>
+        
+      </div>
+      
+        <div class="avatar">
+          
+            <a href="/about"><img src="https://cn.gravatar.com/avatar/35fef74d731255cd569c2c2b0b9e87e4?s=200"></a>
+          
+        </div>
+      
+    </div>
+  </div>
+  <div class="body">
+    
+      
+        <ul class="nav">
+          
+            
+              <li class="category-list-container">
+                <a href="javascript:;">分类</a>
+                <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/社团/">社团</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">4</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="tag-list-container">
+                <a href="javascript:;">标签</a>
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACG/">ACG</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/">Angular</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LoveLive/">LoveLive</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mithril/">Mithril</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Octopress/">Octopress</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/作品/">作品</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/同人/">同人</a><span class="tag-list-count">4</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="archive-list-container">
+                <a href="javascript:;">归档</a>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/">2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/">2013</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/">2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/">2011</a><span class="archive-list-count">1</span></li></ul>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="/" title="主页">主页</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/archives" title="文章">文章</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/about" title="关于">关于</a>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="https://github.com/denjones/hexo-theme-chan" title="Chan" target="_blank" rel="external">Chan</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="https://github.com/denjones" title="Github" target="_blank" rel="external">Github</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/atom.xml" title="RSS">RSS</a>
+              </li>
+            
+          
+        </ul>
+      
+    
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="post-introduction-dustjs-1" class="article article-type-post">
+  
+    <h1 class="article-header">
+      Dust.js语法简介（一）
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2013-08-16
+</span>
+
+    
+	<span class="article-category tagcloud">
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+	</span>
+
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Javascript/">Javascript</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <p><a href="/2013/08/15/introduction-client-template/">经过一轮挣扎</a>，我作出了与LinkedIn一样的选择，使用Dust.js作为模板，但是因为Dust.js缺少中文文档，导致在国内的普及率比较低。于是我决定在这里对Dust的语法进行一些必要的介绍。</p>
+<a id="more"></a>
+<p>##为什么要用前端模板？</p>
+<p>在静态页面中，包括已经从后台生成的HTML中，一般很少需要应用到模板，但是随着AJAX技术的发展，不刷新页面而动态更新内容的需求越来越高。为了降低通讯成本，这种通讯技术传输的一般是一个JSON对象，而不是一整串HTML字符串，所以在前端接受JSON数据之后，还要经过处理才能按要求显示在浏览器上。若只是用纯javascript进行拼接处理，将是一个比较繁琐的过程，而且写出来的代码不直观，可读性比较低。比如如果一个JSON对象<code>people</code>是下面这样的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="string">"title"</span>: <span class="string">"Famous People"</span>,</div><div class="line">	<span class="string">"names"</span>: [&#123; <span class="string">"name"</span>: <span class="string">"Larry"</span> &#125;, &#123; <span class="string">"name"</span>: <span class="string">"Curly"</span> &#125;, &#123; <span class="string">"name"</span>: <span class="string">"Moe"</span> &#125;]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们要把他渲染成一个HTML列表如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Famous People</div><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">　　<span class="tag">&lt;<span class="name">li</span>&gt;</span>Larry<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">　　<span class="tag">&lt;<span class="name">li</span>&gt;</span>Curly<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">　　<span class="tag">&lt;<span class="name">li</span>&gt;</span>Moe<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>使用纯粹的javascript将是这样的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> result = people.title + <span class="string">'\n'</span>;</div><div class="line">result += <span class="string">'&lt;ul&gt;'</span> + <span class="string">'\n'</span>;</div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; people.names.length; i++) &#123;</div><div class="line">	result += <span class="string">'&lt;li&gt;'</span> + people.names[i].name + <span class="string">'&lt;/li&gt;'</span> + <span class="string">'\n'</span>;</div><div class="line">&#125;</div><div class="line">result += <span class="string">'&lt;/ul&gt;'</span></div></pre></td></tr></table></figure>
+<p>当然了这只是一个比较简单的例子，而且代码具有专用性且不是最简形式，但是为了兼顾可读性和简介性这样写是比较好的。而使用dust模板将只需要一个模板：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;title&#125;</div><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">&#123;#names&#125;</div><div class="line">　　<span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;name&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span>&#123;~n&#125;</div><div class="line">&#123;/names&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>然后将<code>people</code>传给编译好的模板则可生成所需要的结果，非常直观。</p>
+<p>##什么是Dust.js？</p>
+<p>Dustjs、dust.js或者直接叫Dust，是一种模板，一开始是由<a href="https://github.com/akdubya" target="_blank" rel="external">Aleksander</a> 编写并于2010发布第一个版本<a href="https://github.com/akdubya/dustjs" target="_blank" rel="external">于Github</a>。因为后台编译使用 Node.js 所以延续了在插件名后加.js的传统。Aleksander 很喜欢胡子模板 Mustache 的语法。但是Mustache缺少了Aleksander想要的特性，比如模板块和高性能。</p>
+<p>从<a href="http://akdubya.github.io/dustjs/" target="_blank" rel="external">dust.js的导引页面</a>看来，这个模板制作者还是很有诚意的。可惜这个项目已于两年前停止更新，版本停留在0.3.0。好消息是大型职业社交网<a href="http://www.linkedin.com" target="_blank" rel="external">LinkedIn</a>也了解到了这个模板的优点和潜力，并接手了Dust.js的后续开发，最终出来的就是现在的<a href="http://linkedin.github.io/dustjs/" target="_blank" rel="external">Dust.js(LinkedIn)</a>，为了简便起见后面继续称之为Dust。经过不断地更新，Dust目前已经到了2.0版本了。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>由于时间关系，我还是决定将真正的语法介绍留到下一篇文章了，敬请期待。</p>
+<p>##文章链接</p>
+<ul>
+<li><a href="/2013/08/16/introduction-dustjs-1">Dust.js语法简介（一）</a></li>
+<li><a href="/2013/08/17/introduction-dustjs-2">Dust.js语法简介（二）</a></li>
+<li><a href="/2013/08/19/introduction-dustjs-3">Dust.js语法简介（三）</a></li>
+</ul>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+    
+  <!-- JiaThis Button BEGIN -->
+  <div class="jiathis_style_32x32">
+    <a class="jiathis_button_weixin"></a>
+    <a class="jiathis_button_tsina"></a>
+  	<a class="jiathis_button_qzone"></a>
+  	<a href="http://www.jiathis.com/share?uid=1589291" class="jiathis jtico jtico_jiathis" target="_blank"></a>
+  </div>
+  <script type="text/javascript">
+  var jiathis_config = {data_track_clickback:'true'};
+  </script>
+  <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1589291" charset="utf-8"></script>
+  <!-- JiaThis Button END -->
+
+
+  </footer>
+</article>
+
+
+  <link rel="stylesheet" href="http://static.duoshuo.com/styles/embed.default.css?349d9313.css">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="2013/08/16/introduction-dustjs-1/" data-title="Dust.js语法简介（一）" data-url="/2013/08/16/introduction-dustjs-1/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+    var duoshuoQuery = {
+      short_name: "sprabbit"
+    };
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';
+      ds.async = true;
+      ds.src = (document.location.protocol == 'https:'
+        ? 'https:'
+        : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+  <!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+          <div class="main-footer">
+  
+    © 2016 SPRABBIT - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+  <link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/PhotoSwipe/photoswipe.js"></script>
+  <script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+</body>
+</html>

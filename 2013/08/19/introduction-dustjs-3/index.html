@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    Dust.js语法简介（三）
+  
+</title>
+
+<meta name="description" content="上一篇介绍了Dust的最基本的语法，已经足够应付一般的模板翻译。这一章将介绍一些涉及逻辑的Dust语法以及介绍如何在前端应用模板。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dust.js语法简介（三）">
+<meta property="og:url" content="http://blog.sprabbit.com/2013/08/19/introduction-dustjs-3/index.html">
+<meta property="og:site_name" content="SPRABBIT">
+<meta property="og:description" content="上一篇介绍了Dust的最基本的语法，已经足够应付一般的模板翻译。这一章将介绍一些涉及逻辑的Dust语法以及介绍如何在前端应用模板。">
+<meta property="og:updated_time" content="2016-07-24T02:45:08.148Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dust.js语法简介（三）">
+<meta name="twitter:description" content="上一篇介绍了Dust的最基本的语法，已经足够应付一般的模板翻译。这一章将介绍一些涉及逻辑的Dust语法以及介绍如何在前端应用模板。">
+
+
+  <link rel="alternative" href="/atom.xml" title="SPRABBIT" type="application/atom+xml">
+
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?d98dab13c098e2a1f6439b963347ad32";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+</head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">SPRABBIT</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+  <div class="header">
+    <h1 class="title"><a href="/">SPRABBIT</a></h1>
+    
+      <p class="subtitle">
+        菩提本无树，明镜亦非台；本来无一物，何处惹尘埃？
+      </p>
+    
+    <div class="info">
+      <div class="content">
+        
+          <div class="description">一个文艺技术的博客</div>
+        
+        
+          <div class="author">Kenneth</div>
+        
+      </div>
+      
+        <div class="avatar">
+          
+            <a href="/about"><img src="https://cn.gravatar.com/avatar/35fef74d731255cd569c2c2b0b9e87e4?s=200"></a>
+          
+        </div>
+      
+    </div>
+  </div>
+  <div class="body">
+    
+      
+        <ul class="nav">
+          
+            
+              <li class="category-list-container">
+                <a href="javascript:;">分类</a>
+                <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/社团/">社团</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">4</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="tag-list-container">
+                <a href="javascript:;">标签</a>
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACG/">ACG</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/">Angular</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LoveLive/">LoveLive</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mithril/">Mithril</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Octopress/">Octopress</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/作品/">作品</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/同人/">同人</a><span class="tag-list-count">4</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="archive-list-container">
+                <a href="javascript:;">归档</a>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/">2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/">2013</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/">2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/">2011</a><span class="archive-list-count">1</span></li></ul>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="/" title="主页">主页</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/archives" title="文章">文章</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/about" title="关于">关于</a>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="https://github.com/denjones/hexo-theme-chan" title="Chan" target="_blank" rel="external">Chan</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="https://github.com/denjones" title="Github" target="_blank" rel="external">Github</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/atom.xml" title="RSS">RSS</a>
+              </li>
+            
+          
+        </ul>
+      
+    
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="post-introduction-dustjs-3" class="article article-type-post">
+  
+    <h1 class="article-header">
+      Dust.js语法简介（三）
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2013-08-19
+</span>
+
+    
+	<span class="article-category tagcloud">
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+	</span>
+
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Javascript/">Javascript</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <p><a href="/2013/08/17/introduction-dustjs-2/">上一篇</a>介绍了Dust的最基本的语法，已经足够应付一般的模板翻译。这一章将介绍一些涉及逻辑的Dust语法以及介绍如何在前端应用模板。</p>
+<a id="more"></a>
+<p>##逻辑区段</p>
+<p>###?标签</p>
+<p>用<code>?</code>来代替区段标签中的<code>#</code>时，仅当<code>name</code>的值为真时，才执行区段主体部分。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;?name&#125; body &#123;/name&#125;</div></pre></td></tr></table></figure>
+<p>###^标签</p>
+<p>用<code>^</code>来代替<code>#</code>时，仅当<code>name</code>的值为假时，才执行区段主体部分。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;^name&#125; body &#123;/name&#125;</div></pre></td></tr></table></figure>
+<p>###{:else}标签</p>
+<p>当一个区段标签（包括<code>#</code>、<code>?</code>、<code>^</code>、以及逻辑标签等）的值为假时，若区段主体中包含{:else}标签，则执行<code>{:else}</code>标签以及区段结束标签之间的内容，否则忽略这些内容。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">&#123;#friends&#125;</div><div class="line">	<span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;name&#125;, &#123;age&#125;&#123;~n&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">&#123;:else&#125;</div><div class="line">	<span class="tag">&lt;<span class="name">p</span>&gt;</span>You have no friends!<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">&#123;/friends&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>若friend为空，则仅仅输出：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">p</span>&gt;</span>You have no friends!<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>###值的真假</p>
+<p>在区段中判断标签的真假的方法与Javascript本身稍有不同，Dust将以下值判断为假：</p>
+<ul>
+<li>空字符串<code>’’</code>、<code>””</code></li>
+<li>布尔<code>false</code></li>
+<li><code>null</code></li>
+<li><code>undefined</code></li>
+<li>空列表<code>[]</code></li>
+</ul>
+<p>其余值均为真值，包括数字“0”，空对象<code>{}</code>。</p>
+<p>##拆分（Partials）</p>
+<p>拆分是一种将重复使用的模板抽取出来，并在使用到这段模板的模板中直接导入该模板，避免重复劳动的方法。在服务端，一个名为“xxx”的Dust模板通常通常保存在一个名为xxx.dust的模板文件中。我们可以利用模板名来在模板中插入一段来自其他模版文件的模板：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;&gt;name /&#125;</div></pre></td></tr></table></figure>
+<p>以上是一个自封闭的区段标签，代表将name.dust中的模版插入到当前位置。若文件包含路径，则用双引号包裹：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;&gt;”dust/name” /&#125;</div></pre></td></tr></table></figure>
+<p>标签中也可以填写参数：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;&gt;”dust/name” foo=”Hello” bar=” World”/&#125;</div></pre></td></tr></table></figure>
+<p>甚至可以使用动态路径：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;&gt;”dust/&#123;pathName&#125;” /&#125;</div></pre></td></tr></table></figure>
+<p>##区块（Blocks）</p>
+<p>通过拆分可以重用一个模版，但是用这种方法来派生模版有一个缺点，就是你需要记得需要在什么位置插入哪个模版，并且对每一个派生出来的模版都要重新布局一次。区块可以解决这个问题，在父模板中使用区块可以方便地在子模板中替换区块中的内容。区块也是一种特殊的区段，定义方法如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;+name /&#125;</div></pre></td></tr></table></figure>
+<p>或者在区段中填写默认内容，当区块没有被替换时，将显示默认内容：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;+name&#125;default Content&#123;/name&#125;</div></pre></td></tr></table></figure>
+<p>使用区块替换需要在子模板中使用拆分区段（<code>&gt;</code>）导入父模板，并使用替换区段（<code>&lt;</code>）进行替换：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&#123;&gt;father/&#125;</div><div class="line">&#123;<span class="tag">&lt;<span class="name">name&#125;Content&#123;</span>/<span class="attr">name</span>&#125;</span></div></pre></td></tr></table></figure>
+<p>比如一个父模板可以写成这样：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"page"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;+pageHeader&#125;PayPal&#123;/pageHeader&#125;<span class="tag">&lt;/<span class="name">h</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bodyContent"</span>&gt;</span></div><div class="line">  		&#123;+bodyContent/&#125;</div><div class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"footer"</span>&gt;</span></div><div class="line"> 	&#123;+pageFooter&#125;Contact Us	&#123;/pageFooter&#125;</div><div class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>然后保存为shared/base_template.dust文件，然后定义子模板：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&#123;! 首先导入父模板 !&#125;</div><div class="line">&#123;&gt;"shared/base_template"/&#125;</div><div class="line"></div><div class="line">&#123;! 然后定义对应的部分 !&#125;</div><div class="line">&#123;&lt;bodyContent&#125;</div><div class="line">&lt;p&gt;These are your current settings:&lt;/p&gt;</div><div class="line">&lt;ul&gt;</div><div class="line">  &lt;li&gt;xxxx&lt;/li&gt;</div><div class="line">  &lt;li&gt;yyy&lt;/li&gt;</div><div class="line">&lt;/ul&gt;</div><div class="line">&#123;/bodyContent&#125;</div><div class="line">&#123;&lt;pageFooter&#125;</div><div class="line">       &lt;hr&gt;</div><div class="line">       &lt;a href="/contactUs"&gt;About Us&lt;/a&gt; |</div><div class="line">       &lt;a href="/contactUs"&gt;Contact Us&lt;/a&gt;</div><div class="line">&#123;/pageFooter&#125;</div></pre></td></tr></table></figure>
+<p>##应用Dust模板</p>
+<p>至此，Dust自带的基本功能语法已经介绍完毕，目前大家可能只在测试器中使用过模板，以下将介绍如何直接在前端中应用模板。</p>
+<p>###编译</p>
+<p>之前也介绍过，Dust是编译型模板，意思则是若需应用模板，首先要将模板可执行化，即将模板变成可执行的代码。如果你使用过Dust测试器，那么你会发现在你输入模板后，会在2号框中显示一个函数定义，那就是编译生成的代码。使用编译型模板有一个好处，就是当模板编译好之后，若需要重复使用模板，不需要每次都对模板重新进行分析，加快模板解析的速度，而且，模板可以预先编译好保存在服务器，甚至让前端连第一次编译的时间都节省了。</p>
+<p>因此Dust库有两种发行版本：</p>
+<ul>
+<li>dust-core-2.0.2.js</li>
+<li>dust-full-2.0.2.js</li>
+</ul>
+<p>前者为核心（Core）版本，其只包含模板解析的相关代码，大小只有十几k，而完全版（Full）则包含Dust的所有代码，包括编译器，大小有一百多k。对于不需要在前端进行编译的项目，仅仅需要使用核心版本即可，这也是速度比较快的做法。但是对于需要在前端动态编译的项目，则只能使用包含编译器的完全版。</p>
+<p>编译模板的方法很简单，使用完全版的dust.compile()方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> compiled = dust.compile(<span class="string">"Hello &#123;name&#125;!"</span>, <span class="string">"intro"</span>);</div></pre></td></tr></table></figure>
+<p>其中第一个参数为模板字符串，第二个参数为模板名，函数将返回包含编译好的可执行代码的字符串。这个操作不会注册这个模板，仅进行编译，此时仍不可通过模板名来调用这段代码。</p>
+<p>###注册</p>
+<p>如果直接执行一遍compiled中的代码，则模板会按之前指定的名字注册到dust，从而可以通过模板名来调用该模板。但若compiled代码未被执行过，则需要在渲染前手动将其注册到dust中，注册的方法很简单：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dust.loadSource(compiled);</div></pre></td></tr></table></figure>
+<p>###渲染</p>
+<p>通过编译注册可以让多套模板处于就绪状态，对于这些模板，我们可以直接用它将JSON对象渲染成HTML文本，通过调用dust.render()方法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dust.render(<span class="string">"intro"</span>, &#123;name: <span class="string">"Fred"</span>&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err, out</span>) </span>&#123;</div><div class="line">	<span class="built_in">console</span>.log(out);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>这个方法接受3个参数，第一个为模板名，第二个为JSON对象，第三个是一个接受两个参数的回调函数。执行这个方法后Dust会使用注册好的对应模板对JSON对象进行处理，得出一个渲染结果字符串，然后调用回调函数，其中第一个参数包含了在处理过程中出现的错误信息，第二个参数就是渲染结果字符串。一般会在回调函数中将渲染结果插入到当前的DOM结构中，以便在浏览器中显示渲染结果。</p>
+<p>###区块和拆分</p>
+<p>一般使用文件来保存模板并且使用区块和拆分是让Dust作为服务端模板时应用的技术，因为在客户端Javascript中无法很方便地对分布式文件进行操作。但是我们可以通过在本地部署模板数据，编译成可执行代码并用一个js文件来保存的方式来使用区块和拆分。</p>
+<p>若在Linux平台则直接在终端安装npm和dust并使用dustc命令编译成代码，得到js文件。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ npm install dustjs-linkedin</div><div class="line">$ dustc input.dust output.js</div></pre></td></tr></table></figure>
+<p>或者在js引擎中使用dust.compile()，将模板复制到第一个参数，指定第二参数为其不带后缀的文件名，并将结果输出到js文件。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> output1 = dust.compile(partialStr, <span class="string">"partial"</span>);</div><div class="line"><span class="keyword">var</span> output2 = dust.compile(baseStr, <span class="string">"base"</span>);</div><div class="line"><span class="keyword">var</span> output3 = dust.compile(childStr, <span class="string">"child"</span>);</div></pre></td></tr></table></figure>
+<p>最后在HTML中导入所有生成的js文件即可使用。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"partial.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"base.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"child.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>注意此时不再需要使用dust.loadSource()来注册，因为script标签将js文件执行了一次，已经将模板注册好了。此时已可使用dust.render()进行渲染。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>至此，我们已经可以在前端中使用模板了，但是还有一些高级功能这里并未涉及，包括<code>@</code>辅助标签以及自定义扩展标签，如果有动力写Dust.js语法简介（四）的话，我将会在那介绍。除此之外，这里只提供了在Linux编译模板的一些官方方法，若需要在Windows下编译模板，则比较麻烦，有机会再写一篇如何在Windows下编译模板的教程吧。</p>
+<p>##文章链接</p>
+<ul>
+<li><a href="/2013/08/16/introduction-dustjs-1">Dust.js语法简介（一）</a></li>
+<li><a href="/2013/08/17/introduction-dustjs-2">Dust.js语法简介（二）</a></li>
+<li><a href="/2013/08/19/introduction-dustjs-3">Dust.js语法简介（三）</a></li>
+</ul>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+    
+  <!-- JiaThis Button BEGIN -->
+  <div class="jiathis_style_32x32">
+    <a class="jiathis_button_weixin"></a>
+    <a class="jiathis_button_tsina"></a>
+  	<a class="jiathis_button_qzone"></a>
+  	<a href="http://www.jiathis.com/share?uid=1589291" class="jiathis jtico jtico_jiathis" target="_blank"></a>
+  </div>
+  <script type="text/javascript">
+  var jiathis_config = {data_track_clickback:'true'};
+  </script>
+  <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1589291" charset="utf-8"></script>
+  <!-- JiaThis Button END -->
+
+
+  </footer>
+</article>
+
+
+  <link rel="stylesheet" href="http://static.duoshuo.com/styles/embed.default.css?349d9313.css">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="2013/08/19/introduction-dustjs-3/" data-title="Dust.js语法简介（三）" data-url="/2013/08/19/introduction-dustjs-3/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+    var duoshuoQuery = {
+      short_name: "sprabbit"
+    };
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';
+      ds.async = true;
+      ds.src = (document.location.protocol == 'https:'
+        ? 'https:'
+        : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+  <!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+          <div class="main-footer">
+  
+    © 2016 SPRABBIT - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+  <link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/PhotoSwipe/photoswipe.js"></script>
+  <script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+</body>
+</html>

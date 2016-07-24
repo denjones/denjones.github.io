@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    在新Windows系统中重新部署Octopress
+  
+</title>
+
+<meta name="description" content="最近重装Win7 x64后直接在线升级到了Win8 x64，很多东西都要重新部署，包括octopress环境。这里记录一下关键的步骤，以便日后参考。
+这个Memo将从安装git开始记录，前提是已经在别的电脑上往github部署好了Octopress。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在新Windows系统中重新部署Octopress">
+<meta property="og:url" content="http://blog.sprabbit.com/2012/12/21/recover-octopress/index.html">
+<meta property="og:site_name" content="SPRABBIT">
+<meta property="og:description" content="最近重装Win7 x64后直接在线升级到了Win8 x64，很多东西都要重新部署，包括octopress环境。这里记录一下关键的步骤，以便日后参考。
+这个Memo将从安装git开始记录，前提是已经在别的电脑上往github部署好了Octopress。">
+<meta property="og:updated_time" content="2016-07-24T02:45:08.095Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在新Windows系统中重新部署Octopress">
+<meta name="twitter:description" content="最近重装Win7 x64后直接在线升级到了Win8 x64，很多东西都要重新部署，包括octopress环境。这里记录一下关键的步骤，以便日后参考。
+这个Memo将从安装git开始记录，前提是已经在别的电脑上往github部署好了Octopress。">
+
+
+  <link rel="alternative" href="/atom.xml" title="SPRABBIT" type="application/atom+xml">
+
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?d98dab13c098e2a1f6439b963347ad32";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+</head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">SPRABBIT</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+  <div class="header">
+    <h1 class="title"><a href="/">SPRABBIT</a></h1>
+    
+      <p class="subtitle">
+        菩提本无树，明镜亦非台；本来无一物，何处惹尘埃？
+      </p>
+    
+    <div class="info">
+      <div class="content">
+        
+          <div class="description">一个文艺技术的博客</div>
+        
+        
+          <div class="author">Kenneth</div>
+        
+      </div>
+      
+        <div class="avatar">
+          
+            <a href="/about"><img src="https://cn.gravatar.com/avatar/35fef74d731255cd569c2c2b0b9e87e4?s=200"></a>
+          
+        </div>
+      
+    </div>
+  </div>
+  <div class="body">
+    
+      
+        <ul class="nav">
+          
+            
+              <li class="category-list-container">
+                <a href="javascript:;">分类</a>
+                <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/社团/">社团</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">4</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="tag-list-container">
+                <a href="javascript:;">标签</a>
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACG/">ACG</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/">Angular</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LoveLive/">LoveLive</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mithril/">Mithril</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Octopress/">Octopress</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/作品/">作品</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/同人/">同人</a><span class="tag-list-count">4</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="archive-list-container">
+                <a href="javascript:;">归档</a>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/">2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/">2013</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/">2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/">2011</a><span class="archive-list-count">1</span></li></ul>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="/" title="主页">主页</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/archives" title="文章">文章</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/about" title="关于">关于</a>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="https://github.com/denjones/hexo-theme-chan" title="Chan" target="_blank" rel="external">Chan</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="https://github.com/denjones" title="Github" target="_blank" rel="external">Github</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/atom.xml" title="RSS">RSS</a>
+              </li>
+            
+          
+        </ul>
+      
+    
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="post-recover-octopress" class="article article-type-post">
+  
+    <h1 class="article-header">
+      在新Windows系统中重新部署Octopress
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2012-12-21
+</span>
+
+    
+	<span class="article-category tagcloud">
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+	</span>
+
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Octopress/">Octopress</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <p>最近重装Win7 x64后直接在线升级到了Win8 x64，很多东西都要重新部署，包括octopress环境。这里记录一下关键的步骤，以便日后参考。</p>
+<p>这个Memo将从安装git开始记录，前提是已经在别的电脑上往github部署好了Octopress。</p>
+<a id="more"></a>
+<h2>第一步：部署Git</h2>
+
+<p>参考过程：<a href="https://help.github.com/articles/set-up-git" target="_blank" rel="external">Git hub官网</a></p>
+<h4><a href="http://git-scm.com/downloads" target="_blank" rel="external">下载并安装最新版Git</a></h4>
+
+<p>（可能需要翻墙，也可以自行搜索下载）</p>
+<h4>设置用户名</h4>
+
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git config --global user<span class="selector-class">.name</span> <span class="string">"Your Name Here"</span></div></pre></td></tr></table></figure>
+<h4>设置邮箱</h4>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">git</span> <span class="selector-tag">config</span> <span class="selector-tag">--global</span> <span class="selector-tag">user</span><span class="selector-class">.email</span> "<span class="selector-tag">your_email</span>@<span class="keyword">youremail</span>.<span class="keyword">com</span>"</div></pre></td></tr></table></figure>
+<h4>设置密码缓存（3600秒）</h4>
+
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git config --global credential<span class="selector-class">.helper</span> <span class="string">'cache --timeout=3600'</span></div></pre></td></tr></table></figure>
+<h4>生成SSH key</h4>
+
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -<span class="keyword">C</span> <span class="string">'your_email@youremail.com'</span> -t rsa</div></pre></td></tr></table></figure>
+<h4>拷贝Key</h4>
+
+<p>到<code>C:/Users/用户名/ssh</code>打开并拷贝<code>id_rsa.pub</code>的内容。</p>
+<h4>注册SSH Key</h4>
+
+<p>到github页面点右上角的Account Setting，然后点左边的SSH Keys，再点右边的Add SSH key，然后把拷贝的内容粘贴到空白处点Add Key即可。</p>
+<h2>第二步：部署Octopress执行环境</h2>
+
+<p>参考过程：<a href="http://sinosmond.github.com/blog/2012/03/12/install-and-deploy-octopress-to-github-on-windows7-from-scratch/" target="_blank" rel="external">Sinosmond的一篇文章</a></p>
+<h4>安装Ruby</h4>
+
+<p>到 <a href="http://rubyforge.org/frs/?group_id=167" target="_blank" rel="external">RailsInstaller</a> 查找下载最新版本（当前为1.9.3）。安装完后将安装目录下的bin文件夹添加到系统变量<code>PATH</code>中</p>
+<h4>安装DevKit</h4>
+
+<p>下载<a href="https://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe" target="_blank" rel="external">RubyInstaller DevKit</a>并解压。在解压目录中用命令行执行：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ruby dk<span class="selector-class">.rb</span> init</div><div class="line">ruby dk<span class="selector-class">.rb</span> install</div></pre></td></tr></table></figure></p>
+<h4>安装Python</h4>
+
+<p>下载并安装<a href="http://www.activestate.com/activepython/downloads" target="_blank" rel="external">ActivePython-2.7 的 x86版本</a>（即使是64位系统也尽量使用本版，其他版本兼容性未知）。<br>在命令行中执行<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">easy_install</span> pygments</div></pre></td></tr></table></figure></p>
+<h4>设置语言环境变量</h4>
+
+<p>设置 <code>LANG</code> 和 <code>LC_ALL</code> 两个环境变量，其值均设置为 <code>zh_CN.UTF-8</code></p>
+<p>启动git bash，执行<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">echo <span class="string">"export LANG LC_ALL"</span> &gt; ~/<span class="selector-class">.bash_profile</span></div><div class="line">echo <span class="string">"alias ll='ls -l --color=tty'"</span> &gt;&gt; ~/<span class="selector-class">.bash_profile</span></div><div class="line">echo <span class="string">"alias ls='ls --color=tty'"</span> &gt;&gt; ~/.bash_profile</div></pre></td></tr></table></figure></p>
+<h4>配置Ruby</h4>
+
+<p>在git bash中执行一下命令配置更新源<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gem sources --remove <span class="string">http:</span><span class="comment">//rubygems.org/</span></div><div class="line">gem sources -a <span class="string">http:</span><span class="comment">//ruby.taobao.org/</span></div></pre></td></tr></table></figure></p>
+<p>在git bash中执行一下命令安装rdoc和bundler<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gem <span class="keyword">install</span> rdoc bundler</div></pre></td></tr></table></figure></p>
+<h2>第三步：clone Octopress 分支</h2>
+
+<h4>clone source 分支</h4>
+
+<p>在git bash中进入到需要存放本地分支的目录，然后执行<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone -<span class="selector-tag">b</span> source username:username<span class="selector-class">.github</span><span class="selector-class">.com</span><span class="selector-class">.git</span> username<span class="selector-class">.github</span><span class="selector-class">.com</span></div></pre></td></tr></table></figure></p>
+<p>以便将“source”分支clone到username.github.com文件夹下。其中以上所有“username”改为真正的用户名。</p>
+<p>如果出现错误尝试使用<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone -<span class="selector-tag">b</span> source git@github<span class="selector-class">.com</span>:username/username<span class="selector-class">.github</span><span class="selector-class">.com</span> username<span class="selector-class">.github</span><span class="selector-class">.com</span></div></pre></td></tr></table></figure></p>
+<h4>clone master 分支</h4>
+
+<p>在git bash中继续执行<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd username<span class="selector-class">.github</span><span class="selector-class">.com</span> #进入到source分支目录</div><div class="line">git clone -<span class="selector-tag">b</span> master username:username<span class="selector-class">.github</span><span class="selector-class">.com</span><span class="selector-class">.git</span> _deploy</div></pre></td></tr></table></figure></p>
+<p>以便将“master”分支clone到username.github.com文件夹下的_deploy文件夹。其中以上所有“username”改为真正的用户名。<br>如果出现错误尝试使用<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone -<span class="selector-tag">b</span> master git@github<span class="selector-class">.com</span>:username/username<span class="selector-class">.github</span><span class="selector-class">.com</span> username<span class="selector-class">.github</span><span class="selector-class">.com</span></div></pre></td></tr></table></figure></p>
+<h4>完成部署</h4>
+
+<p>至此，Octopress重新部署完毕，可以继续写博客咯。太久没动过这个博客了，差点就忘了怎么写博客了，如果有哪里有问题忘提醒。</p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+    
+  <!-- JiaThis Button BEGIN -->
+  <div class="jiathis_style_32x32">
+    <a class="jiathis_button_weixin"></a>
+    <a class="jiathis_button_tsina"></a>
+  	<a class="jiathis_button_qzone"></a>
+  	<a href="http://www.jiathis.com/share?uid=1589291" class="jiathis jtico jtico_jiathis" target="_blank"></a>
+  </div>
+  <script type="text/javascript">
+  var jiathis_config = {data_track_clickback:'true'};
+  </script>
+  <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1589291" charset="utf-8"></script>
+  <!-- JiaThis Button END -->
+
+
+  </footer>
+</article>
+
+
+  <link rel="stylesheet" href="http://static.duoshuo.com/styles/embed.default.css?349d9313.css">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="2012/12/21/recover-octopress/" data-title="在新Windows系统中重新部署Octopress" data-url="/2012/12/21/recover-octopress/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+    var duoshuoQuery = {
+      short_name: "sprabbit"
+    };
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';
+      ds.async = true;
+      ds.src = (document.location.protocol == 'https:'
+        ? 'https:'
+        : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+  <!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+          <div class="main-footer">
+  
+    © 2016 SPRABBIT - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+  <link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/PhotoSwipe/photoswipe.js"></script>
+  <script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+</body>
+</html>

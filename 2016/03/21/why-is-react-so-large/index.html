@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    为什么 React 体积那么大
+  
+</title>
+
+<meta name="description" content="React 文件体积为何如此庞大？首先，为什么会得出 React 大的结论，对比几个前端框架的 min 文件：
+
+Mithril 0.2.3 19K (8K gzipped)
+Angular 1.2.16 102K (38K gzipped)
+Vue 1.0.8 73K (24K gzipped)
+React 0.14.7 133K (38K gzipped)
+
+React 作为一个 View-V">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么 React 体积那么大">
+<meta property="og:url" content="http://blog.sprabbit.com/2016/03/21/why-is-react-so-large/index.html">
+<meta property="og:site_name" content="SPRABBIT">
+<meta property="og:description" content="React 文件体积为何如此庞大？首先，为什么会得出 React 大的结论，对比几个前端框架的 min 文件：
+
+Mithril 0.2.3 19K (8K gzipped)
+Angular 1.2.16 102K (38K gzipped)
+Vue 1.0.8 73K (24K gzipped)
+React 0.14.7 133K (38K gzipped)
+
+React 作为一个 View-V">
+<meta property="og:updated_time" content="2016-07-24T02:45:08.208Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="为什么 React 体积那么大">
+<meta name="twitter:description" content="React 文件体积为何如此庞大？首先，为什么会得出 React 大的结论，对比几个前端框架的 min 文件：
+
+Mithril 0.2.3 19K (8K gzipped)
+Angular 1.2.16 102K (38K gzipped)
+Vue 1.0.8 73K (24K gzipped)
+React 0.14.7 133K (38K gzipped)
+
+React 作为一个 View-V">
+
+
+  <link rel="alternative" href="/atom.xml" title="SPRABBIT" type="application/atom+xml">
+
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?d98dab13c098e2a1f6439b963347ad32";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+</head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">SPRABBIT</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+  <div class="header">
+    <h1 class="title"><a href="/">SPRABBIT</a></h1>
+    
+      <p class="subtitle">
+        菩提本无树，明镜亦非台；本来无一物，何处惹尘埃？
+      </p>
+    
+    <div class="info">
+      <div class="content">
+        
+          <div class="description">一个文艺技术的博客</div>
+        
+        
+          <div class="author">Kenneth</div>
+        
+      </div>
+      
+        <div class="avatar">
+          
+            <a href="/about"><img src="https://cn.gravatar.com/avatar/35fef74d731255cd569c2c2b0b9e87e4?s=200"></a>
+          
+        </div>
+      
+    </div>
+  </div>
+  <div class="body">
+    
+      
+        <ul class="nav">
+          
+            
+              <li class="category-list-container">
+                <a href="javascript:;">分类</a>
+                <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/社团/">社团</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">4</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="tag-list-container">
+                <a href="javascript:;">标签</a>
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACG/">ACG</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/">Angular</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LoveLive/">LoveLive</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mithril/">Mithril</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Octopress/">Octopress</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/作品/">作品</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/同人/">同人</a><span class="tag-list-count">4</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="archive-list-container">
+                <a href="javascript:;">归档</a>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/">2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/">2013</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/">2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/">2011</a><span class="archive-list-count">1</span></li></ul>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="/" title="主页">主页</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/archives" title="文章">文章</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/about" title="关于">关于</a>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="https://github.com/denjones/hexo-theme-chan" title="Chan" target="_blank" rel="external">Chan</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="https://github.com/denjones" title="Github" target="_blank" rel="external">Github</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/atom.xml" title="RSS">RSS</a>
+              </li>
+            
+          
+        </ul>
+      
+    
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="post-why-is-react-so-large" class="article article-type-post">
+  
+    <h1 class="article-header">
+      为什么 React 体积那么大
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2016-03-21
+</span>
+
+    
+	<span class="article-category tagcloud">
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+	</span>
+
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mithril/">Mithril</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/">React</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <p>React 文件体积为何如此庞大？首先，为什么会得出 React 大的结论，对比几个前端框架的 min 文件：</p>
+<ul>
+<li>Mithril 0.2.3 19K (8K gzipped)</li>
+<li>Angular 1.2.16 102K (38K gzipped)</li>
+<li>Vue 1.0.8 73K (24K gzipped)</li>
+<li>React 0.14.7 133K (38K gzipped)</li>
+</ul>
+<p>React 作为一个 View-ViewModel 库，相比于 Mithril，Vue 这些目的大致相同的库，文件显得尤为庞大，甚至比 Angular 这种全能 MVVM 框架还大。但是这就能说 React 大吗，我认为是的，Mithril 与 React 都是基于 Virtual DOM 的实现，我觉得这很有可比性。虽然 Mithril 的真实性能大致为 React 的一半，但是代码量却是 React 的不到 1/10（实际上 Mithril 只有大概 2000 行代码），Mithril 在使用了一些小技巧之后甚至性能飙升至 React 的数十倍。对 Mithril 感兴趣可以看下 <a href="/2016/03/14/Mithril-Rendering/" title="我对 Mithril 渲染性能的分析">我对 Mithril 渲染性能的分析</a>。</p>
+<a id="more"></a>
+<p>通过分析 React 的源码及其打包过程，可以得出 React 的成分构成：</p>
+<ul>
+<li>React: 687KB 100%<ul>
+<li>renderers 这部分代表了 Virtual DOM 的渲染部分<ul>
+<li>ReactDOM 316KB 55% 主要作用是将 Virtual DOM 渲染成真实 DOM，并进行关联以及之后的 DOM 操作，DOM 事件处理框架</li>
+<li>ReactDOMServer 9KB 1% 这部分代码很大程度上重用 ReactDOM 所以代码量不多</li>
+<li>ReactReconciler 106KB 15% 这部分代表了 React 的差异比较以及做出 DOM 操作的调和算法</li>
+<li>ReactEvent 63KB 9%</li>
+</ul>
+</li>
+<li>ReactIsomorphic 103KB 15% 这部分是 Virtual DOM 的结构代码，包括 ReactComponent，ReactClass，ReactElement 等的实现</li>
+<li>辅助测试代码 48KB 7% 可能这里有一些没有打包的模块，但是确实有一些如 ReactPerf，ReactDefaultPerf 等模块是打包进去了</li>
+<li>其他依赖库 38KB 6%</li>
+</ul>
+</li>
+</ul>
+<p>这里分析的百分比是打包进 react.js（压缩前）的各部分源码文件大小（及其依赖文件）占所有打包文件大小（不包括addons以及fbjs）的百分比，跟压缩合并后的百分比有一定差别，但是可以一定程度上代表代码成分。从成分看来，实际上 VirtualDOM 的代码并不多，大部分代码都放在跟真实 DOM 相关的操作里面，尽管从认知上来看，这些操作并不需要写如此多的代码。我认为导致代码量大的原因大致有以下几点。</p>
+<h3 id="注重安全性"><a href="#注重安全性" class="headerlink" title="注重安全性"></a>注重安全性</h3><p>严格的 Virtual DOM 检查以及 ReactDOM 操作，包括 props 类型，经典 DOM 元素的标签名，属性名，CSS属性名，标签嵌套合法性，支持的原生 DOM 事件类型，等等都有明确的定义。React 毫不吝啬地在所有涉及安全问题的地方使用白名单来提高安全性，这也是代码量大的原因之一：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> HTMLDOMPropertyConfig = &#123;</div><div class="line">  isCustomAttribute: <span class="built_in">RegExp</span>.prototype.test.bind(</div><div class="line">    <span class="regexp">/^(data|aria)-[a-z_][a-z\d_.\-]*$/</span></div><div class="line">  ),</div><div class="line">  Properties: &#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Standard Properties</div><div class="line">     */</div><div class="line">    accept: <span class="literal">null</span>,</div><div class="line">    acceptCharset: <span class="literal">null</span>,</div><div class="line">    accessKey: <span class="literal">null</span>,</div><div class="line">    action: <span class="literal">null</span>,</div><div class="line">    allowFullScreen: MUST_USE_ATTRIBUTE | HAS_BOOLEAN_VALUE,</div><div class="line">    allowTransparency: MUST_USE_ATTRIBUTE,</div><div class="line">    alt: <span class="literal">null</span>,</div><div class="line">    <span class="keyword">async</span>: HAS_BOOLEAN_VALUE,</div><div class="line">    autoComplete: <span class="literal">null</span>,</div><div class="line">    <span class="comment">// autoFocus is polyfilled/normalized by AutoFocusUtils</span></div><div class="line">    <span class="comment">// autoFocus: HAS_BOOLEAN_VALUE,</span></div><div class="line">    autoPlay: HAS_BOOLEAN_VALUE,</div><div class="line">    capture: MUST_USE_ATTRIBUTE | HAS_BOOLEAN_VALUE,</div><div class="line">    cellPadding: <span class="literal">null</span>,</div><div class="line">    cellSpacing: <span class="literal">null</span>,</div><div class="line">    charSet: MUST_USE_ATTRIBUTE,</div><div class="line">    challenge: MUST_USE_ATTRIBUTE,</div><div class="line">    checked: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,</div><div class="line">    classID: MUST_USE_ATTRIBUTE,</div><div class="line">    <span class="comment">// To set className on SVG elements, it's necessary to use .setAttribute;</span></div><div class="line">    <span class="comment">// this works on HTML elements too in all browsers except IE8. Conveniently,</span></div><div class="line">    <span class="comment">// IE8 doesn't support SVG and so we can simply use the attribute in</span></div><div class="line">    <span class="comment">// browsers that support SVG and the property in browsers that don't,</span></div><div class="line">    <span class="comment">// regardless of whether the element is HTML or SVG.</span></div><div class="line">    className: hasSVG ? MUST_USE_ATTRIBUTE : MUST_USE_PROPERTY,</div><div class="line">    cols: MUST_USE_ATTRIBUTE | HAS_POSITIVE_NUMERIC_VALUE,</div><div class="line">    colSpan: <span class="literal">null</span>,</div><div class="line">    content: <span class="literal">null</span>,</div><div class="line">    contentEditable: <span class="literal">null</span>,</div><div class="line">    contextMenu: MUST_USE_ATTRIBUTE,</div><div class="line">    controls: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,</div><div class="line">    coords: <span class="literal">null</span>,</div><div class="line">    crossOrigin: <span class="literal">null</span>,</div><div class="line">    data: <span class="literal">null</span>, <span class="comment">// For `&lt;object /&gt;` acts as `src`.</span></div><div class="line">    dateTime: MUST_USE_ATTRIBUTE,</div><div class="line">    <span class="keyword">default</span>: HAS_BOOLEAN_VALUE,</div><div class="line">    defer: HAS_BOOLEAN_VALUE,</div><div class="line">    <span class="comment">//  ... 省略150行</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="实现同构"><a href="#实现同构" class="headerlink" title="实现同构"></a>实现同构</h3><p>ReactDOM 在前端渲染需要做同构处理，即将服务端返回的第一遍渲染出来的 html DOM 绑定到前端 Virtual DOM 树，这增加了不少 ReactDOM 和 ReactDOMServer 的共用代码，因为必须兼顾浏览器端和服务端渲染的一致性。</p>
+<p>除此之外，ReactDOMServer 即使在前端渲染不会用到，但是为了前后端使用同一份代码，所以依然打包进了 react.js，这也增加了一些体积。</p>
+<h3 id="开发者友好"><a href="#开发者友好" class="headerlink" title="开发者友好"></a>开发者友好</h3><p>大量的提示文本，针对每个模块方法的误用或被抛弃的方法，都有具体详细的提示，这些提示混淆压缩后长度不变：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">warning(</div><div class="line">  owner._warnedAboutRefsInRender,</div><div class="line">  <span class="string">'%s is accessing getDOMNode or findDOMNode inside its render(). '</span> +</div><div class="line">  <span class="string">'render() should be a pure function of props and state. It should '</span> +</div><div class="line">  <span class="string">'never access something that requires stale data from the previous '</span> +</div><div class="line">  <span class="string">'render, such as refs. Move this logic to componentDidMount and '</span> +</div><div class="line">  <span class="string">'componentDidUpdate instead.'</span>,</div><div class="line">  owner.getName() || <span class="string">'A component'</span></div><div class="line">);</div></pre></td></tr></table></figure></p>
+<p>另外，喜欢使用完整的语句作为方法及属性名，如 <code>registrationNameDependencies</code>，也是导致容量大的原因，因为方法名和属性名即使经过压缩混淆，长度也不会改变。以下是压缩后的 React 入口模块代码（格式化）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">"use strict"</span>;</div><div class="line"><span class="keyword">var</span> r = e(<span class="number">35</span>),</div><div class="line">o = e(<span class="number">45</span>),</div><div class="line">a = e(<span class="number">61</span>),</div><div class="line">i = e(<span class="number">23</span>),</div><div class="line">u = e(<span class="number">104</span>),</div><div class="line">s = &#123;&#125;;</div><div class="line">i(s, a),</div><div class="line">i(s, &#123;</div><div class="line">  findDOMNode : u(<span class="string">"findDOMNode"</span>, <span class="string">"ReactDOM"</span>, <span class="string">"react-dom"</span>, r, r.findDOMNode),</div><div class="line">  render : u(<span class="string">"render"</span>, <span class="string">"ReactDOM"</span>, <span class="string">"react-dom"</span>, r, r.render),</div><div class="line">  unmountComponentAtNode : u(<span class="string">"unmountComponentAtNode"</span>, <span class="string">"ReactDOM"</span>, <span class="string">"react-dom"</span>, r, r.unmountComponentAtNode),</div><div class="line">  renderToString : u(<span class="string">"renderToString"</span>, <span class="string">"ReactDOMServer"</span>, <span class="string">"react-dom/server"</span>, o, o.renderToString),</div><div class="line">  renderToStaticMarkup : u(<span class="string">"renderToStaticMarkup"</span>, <span class="string">"ReactDOMServer"</span>, <span class="string">"react-dom/server"</span>, o, o.renderToStaticMarkup)</div><div class="line">&#125;),</div><div class="line">s.__SECRET_DOM_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = r,</div><div class="line">s.__SECRET_DOM_SERVER_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = o,</div><div class="line">t.exports = s</div></pre></td></tr></table></figure>
+<h3 id="过度模块化"><a href="#过度模块化" class="headerlink" title="过度模块化"></a>过度模块化</h3><p>react.js 里面包含了151个模块的定义，平均每个模块化增加的额外代码量：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 模块编译后生成代码</span></div><div class="line"><span class="number">2</span> : [<span class="function"><span class="keyword">function</span> (<span class="params">e, t, n</span>) </span>&#123;</div><div class="line">    <span class="comment">// 原模块定义代码</span></div><div class="line">  &#125;, &#123;</div><div class="line">    <span class="number">106</span> : <span class="number">106</span>,</div><div class="line">    <span class="number">136</span> : <span class="number">136</span>,</div><div class="line">    <span class="number">63</span> : <span class="number">63</span></div><div class="line">  &#125;</div><div class="line">]</div></pre></td></tr></table></figure>
+<p>每个模块增加的代码约为45Byte，加上统一处理函数，共约为7KB的大小。虽然看起来不多，但实际上这占了压缩后的 react.min.js（133KB） 的 5% 的大小。至于真的需要写那么多个模块吗，我觉得是不用的，至少一个模块里面只有一个函数这种（如 onlyChild 模块）是可以集中写的。除此之外，虽然有如此庞大的模块集合，React 的模块间耦合还是很高，模块间相互调用十分繁多。</p>
+<h3 id="其他依赖"><a href="#其他依赖" class="headerlink" title="其他依赖"></a>其他依赖</h3><p>觉得 React 大的原因除了 react.js 本身的庞大外，还有需要和 React 搭配使用的库也有很多，包括 React 自己的 addons，封装好的 http 请求，Flux，Redux 等框架，处理复杂状态的 Immutable.js 等等等。另外如果要适配 IE8 还要引入一堆 polyfill 也增加了不少容量。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>React 确实很大，但是也并非大而无当，起码出发点是好的。但是有没有优化的空间呢，我认为是有的，起码如果区分开发版和发行版能有效的去掉对用户来说没有用的开发者提示。</p>
+<h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p>我们知道我们在程序中需要使用 react-dom.js 来使用 ReactDOM，然而实际上这个文件并不真的包含 ReactDOM 的实现，按照上面的分析 ReactDOM 是 react.js 的一部分:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">React.__SECRET_DOM_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactDOM;</div><div class="line">React.__SECRET_DOM_SERVER_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactDOMServer;</div></pre></td></tr></table></figure>
+<p>那么 react-dom.js 到底干了啥，我们来看看：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>(<span class="params">React</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> React.__SECRET_DOM_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>你TM逗我。其实这也可以理解，React 内部模块的耦合决定了 ReactDOM 不可能单独抽取出来用，react-dom.js 这个模块文件只是给我们暴露一个入口。</p>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+    
+  <!-- JiaThis Button BEGIN -->
+  <div class="jiathis_style_32x32">
+    <a class="jiathis_button_weixin"></a>
+    <a class="jiathis_button_tsina"></a>
+  	<a class="jiathis_button_qzone"></a>
+  	<a href="http://www.jiathis.com/share?uid=1589291" class="jiathis jtico jtico_jiathis" target="_blank"></a>
+  </div>
+  <script type="text/javascript">
+  var jiathis_config = {data_track_clickback:'true'};
+  </script>
+  <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1589291" charset="utf-8"></script>
+  <!-- JiaThis Button END -->
+
+
+  </footer>
+</article>
+
+
+  <link rel="stylesheet" href="http://static.duoshuo.com/styles/embed.default.css?349d9313.css">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="2016/03/21/why-is-react-so-large/" data-title="为什么 React 体积那么大" data-url="/2016/03/21/why-is-react-so-large/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+    var duoshuoQuery = {
+      short_name: "sprabbit"
+    };
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';
+      ds.async = true;
+      ds.src = (document.location.protocol == 'https:'
+        ? 'https:'
+        : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+  <!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+          <div class="main-footer">
+  
+    © 2016 SPRABBIT - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+  <link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/PhotoSwipe/photoswipe.js"></script>
+  <script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+</body>
+</html>

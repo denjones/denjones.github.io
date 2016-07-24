@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+  
+    ARV 渲染实现比较总结
+  
+</title>
+
+<meta name="description" content="前面我已经分析了 Angular，React，Vue 的渲染实现及其性能：
+
+ARV 渲染实现比较之 Angular
+ARV 渲染实现比较之 React
+ARV 渲染实现比较之 Vue
+
+
+直观一点地的看他们之间的效率对比可以看一下这一个 性能评估测试。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ARV 渲染实现比较总结">
+<meta property="og:url" content="http://blog.sprabbit.com/2016/03/08/Angular-React-Vue-Rendering-4/index.html">
+<meta property="og:site_name" content="SPRABBIT">
+<meta property="og:description" content="前面我已经分析了 Angular，React，Vue 的渲染实现及其性能：
+
+ARV 渲染实现比较之 Angular
+ARV 渲染实现比较之 React
+ARV 渲染实现比较之 Vue
+
+
+直观一点地的看他们之间的效率对比可以看一下这一个 性能评估测试。">
+<meta property="og:image" content="http://blog.sprabbit.com/2016/03/08/Angular-React-Vue-Rendering-4/benchmark.png">
+<meta property="og:updated_time" content="2016-07-24T02:45:08.192Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ARV 渲染实现比较总结">
+<meta name="twitter:description" content="前面我已经分析了 Angular，React，Vue 的渲染实现及其性能：
+
+ARV 渲染实现比较之 Angular
+ARV 渲染实现比较之 React
+ARV 渲染实现比较之 Vue
+
+
+直观一点地的看他们之间的效率对比可以看一下这一个 性能评估测试。">
+<meta name="twitter:image" content="http://blog.sprabbit.com/2016/03/08/Angular-React-Vue-Rendering-4/benchmark.png">
+
+
+  <link rel="alternative" href="/atom.xml" title="SPRABBIT" type="application/atom+xml">
+
+
+
+  <link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="/perfect-scrollbar/css/perfect-scrollbar.min.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?d98dab13c098e2a1f6439b963347ad32";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+
+</head>
+<body
+  
+    class="monochrome"
+  
+  >
+  <div class="mobile-header">
+  <button class="sidebar-toggle" type="button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="title" href="/">SPRABBIT</a>
+</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+  <div class="header">
+    <h1 class="title"><a href="/">SPRABBIT</a></h1>
+    
+      <p class="subtitle">
+        菩提本无树，明镜亦非台；本来无一物，何处惹尘埃？
+      </p>
+    
+    <div class="info">
+      <div class="content">
+        
+          <div class="description">一个文艺技术的博客</div>
+        
+        
+          <div class="author">Kenneth</div>
+        
+      </div>
+      
+        <div class="avatar">
+          
+            <a href="/about"><img src="https://cn.gravatar.com/avatar/35fef74d731255cd569c2c2b0b9e87e4?s=200"></a>
+          
+        </div>
+      
+    </div>
+  </div>
+  <div class="body">
+    
+      
+        <ul class="nav">
+          
+            
+              <li class="category-list-container">
+                <a href="javascript:;">分类</a>
+                <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/社团/">社团</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">4</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="tag-list-container">
+                <a href="javascript:;">标签</a>
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACG/">ACG</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/">Angular</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LoveLive/">LoveLive</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mithril/">Mithril</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Octopress/">Octopress</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/作品/">作品</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/同人/">同人</a><span class="tag-list-count">4</span></li></ul>
+              </li>
+            
+          
+            
+              <li class="archive-list-container">
+                <a href="javascript:;">归档</a>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/">2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/">2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/">2013</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/">2012</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/">2011</a><span class="archive-list-count">1</span></li></ul>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="/" title="主页">主页</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/archives" title="文章">文章</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/about" title="关于">关于</a>
+              </li>
+            
+          
+        </ul>
+      
+        <ul class="nav">
+          
+            
+              <li>
+                <a href="https://github.com/denjones/hexo-theme-chan" title="Chan" target="_blank" rel="external">Chan</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="https://github.com/denjones" title="Github" target="_blank" rel="external">Github</a>
+              </li>
+            
+          
+            
+              <li>
+                <a href="/atom.xml" title="RSS">RSS</a>
+              </li>
+            
+          
+        </ul>
+      
+    
+  </div>
+</div>
+
+    <div class="main-content">
+      
+        <div style="max-width: 1000px">
+      
+          <article id="post-Angular-React-Vue-Rendering-4" class="article article-type-post">
+  
+    <h1 class="article-header">
+      ARV 渲染实现比较总结
+    </h1>
+  
+  
+
+  <div class="article-info">
+    <span class="article-date">
+  2016-03-08
+</span>
+
+    
+	<span class="article-category tagcloud">
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+	</span>
+
+
+    
+	<span class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Angular/">Angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Javascript/">Javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
+	</span>
+
+
+  </div>
+  <div class="article-entry">
+    <p>前面我已经分析了 <a href="https://angular.io" target="_blank" rel="external">Angular</a>，<a href="https://facebook.github.io/react" target="_blank" rel="external">React</a>，<a href="http://vuejs.org/" target="_blank" rel="external">Vue</a> 的渲染实现及其性能：</p>
+<ul>
+<li><a href="/2016/03/02/Angular-React-Vue-Rendering-1/" title="ARV 渲染实现比较之 Angular">ARV 渲染实现比较之 Angular</a></li>
+<li><a href="/2016/03/05/Angular-React-Vue-Rendering-2/" title="ARV 渲染实现比较之 React">ARV 渲染实现比较之 React</a></li>
+<li><a href="/2016/03/07/Angular-React-Vue-Rendering-3/" title="ARV 渲染实现比较之 Vue">ARV 渲染实现比较之 Vue</a>
+</li>
+</ul>
+<p>直观一点地的看他们之间的效率对比可以看一下这一个 <a href="http://jsperf.com/angular-vs-knockout-vs-ember/842" target="_blank" rel="external">性能评估测试</a>。</p>
+<a id="more"></a>
+<p>这个测试的原理是针对每一个前端框架，创建一个数组模型到视图的绑定，并重复以下操作：清空列表数据，然后循环对数组插入100个元素。重复操作一段时间，最后将比较他们之间每秒可以达到的操作次数。他比较了包括 Angular，React，Vue 在内的数个流行框架，其中 <a href="http://mithril.js.org/" target="_blank" rel="external">Mithril</a> 的数据十分高，是 Vue 的2到3倍，而且体积十分小压缩后只有十几k，但是很遗憾他并没有列入我们的讨论范围，因为他还在开发阶段，使用人数也并不多。虽然这个测试可能比较片面，现实开发中用到的数据并不会那么简单粗暴，但是他也一定程度上能代表这些框架的性能了。</p>
+<p>下面这幅图是这些框架的渲染速度横向对比：</p>
+<img src="/2016/03/08/Angular-React-Vue-Rendering-4/benchmark.png" alt="benchmark.png" title="">
+<p>在这幅图中，你几乎看不到 Angular 的数据，因为他每秒只能进行 100 次左右的操作。React 的操作数大概在 1000 - 2000 之间，而 Vue 则在 10000 次以上。这也印证了前面几篇文章的分析。</p>
+<h2 id="Angular"><a href="#Angular" class="headerlink" title="Angular"></a>Angular</h2><p>Angular 很慢，因为他用了脏值检查这种被动的遍历方法穷举所有监听的表达式。在这个例子中使用了 <code>track by $index</code> 命令，因为数组项是纯字符串。每对数组做一次修改，所有数组项都被重新评估。</p>
+<p>做 100 次操作，实际上要比较 100 x 100 = 10000 个数据，这些比较都是逻辑比较，速度应该还行，主要是这些比较导致了 10000 个模版关联，更新 DOM 树的操作，也就这种级别的运算速度了。但是他的慢到不能用吗，实际上也并不，因为正常需求来说不需要这么高频率的更新。</p>
+<h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><p>React 每秒能进行 1000 次操作，大约是 Angular 的 10 倍，这得益于 React 的虚拟 DOM 树。这个例子中，使用了列表的序号作为 key。</p>
+<p>做 100 次操作，需要做 100 * 100 = 10000 个虚拟 DOM 节点的差异对比，但是因为数组项对应的 DOM 的 key 没有变化，因此并不会对 DOM 树结构进行操作，而仅仅会更新这个元素内部的文字，这个操作的复杂度是线性的。但是这里的虚拟 DOM 节点的差异对比并不是简单的值的对比，耗时比 10000 次比较数据要多，性能的提高点在于省掉大量修改真实 DOM 树结构的时间</p>
+<h2 id="Vue"><a href="#Vue" class="headerlink" title="Vue"></a>Vue</h2><p>Vue 每秒能进行 10000 次操作，又大约是 React 的 10 倍。每一次对数组的赋值，都直接触发了数据项的对比然后直接更新绑定 DOM 元素的内部文本。没有模版关联，也不用对比虚拟 DOM 节点差异。</p>
+<p>做 100 次操作，只需执行 100 x 100 = 10000 求值并对比，然后在线性时间内更新文本，没有其他额外的耗时操作。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>漫长的分析后可以自信地说出这个结果了，渲染性能上 Vue &gt; React &gt; Angular。</p>
+<h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p>虽然本文仅从渲染性能上对比 Angular，React 和 Vue，但是用于不用这些框架绝对不能仅看性能的。Angular 社区成熟，轮子丰富，开发快捷，适合开发面向客户的产品的需要追求沉稳需求；React 组件化思想浓厚，高度可重用，响应数据变化快捷，结合 Redux 等框架后开发具有复杂交互操作的产品十分便利，但是体积庞大，代码冗长书写速度较慢，适合开发对内的运营项目；Vue 轻便简洁，渲染速度极高，只做一件事并做到极致，但是缺少轮子，而且不支持 IE8，适合开发 Html5 项目，尤其是手机端 SPA。当然，最终的选择，还是看团队需求。</p>
+<p>文章链接：</p>
+<ul>
+<li><a href="/2016/03/02/Angular-React-Vue-Rendering-1/" title="ARV 渲染实现比较之 Angular">ARV 渲染实现比较之 Angular</a></li>
+<li><a href="/2016/03/05/Angular-React-Vue-Rendering-2/" title="ARV 渲染实现比较之 React">ARV 渲染实现比较之 React</a></li>
+<li><a href="/2016/03/07/Angular-React-Vue-Rendering-3/" title="ARV 渲染实现比较之 Vue">ARV 渲染实现比较之 Vue</a></li>
+<li><a href="/2016/03/08/Angular-React-Vue-Rendering-4/" title="ARV 渲染实现比较总结">ARV 渲染实现比较总结</a></li>
+<li><a href="/2016/03/14/Mithril-Rendering/" title="ARV 渲染实现番外篇之 Mithril">ARV 渲染实现番外篇之 Mithril</a>
+</li>
+</ul>
+
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.z" target="_blank" title="署名-相同方式共享">
+      <img src="/images/cc/cc.png">
+      
+          <img src="/images/cc/by.png">
+        
+          <img src="/images/cc/sa.png">
+      
+      <span>
+        本作品采用知识共享 署名-相同方式共享 4.0 国际许可协议进行许可。
+      </span>
+    </a>
+  </div>
+
+
+    
+  <!-- JiaThis Button BEGIN -->
+  <div class="jiathis_style_32x32">
+    <a class="jiathis_button_weixin"></a>
+    <a class="jiathis_button_tsina"></a>
+  	<a class="jiathis_button_qzone"></a>
+  	<a href="http://www.jiathis.com/share?uid=1589291" class="jiathis jtico jtico_jiathis" target="_blank"></a>
+  </div>
+  <script type="text/javascript">
+  var jiathis_config = {data_track_clickback:'true'};
+  </script>
+  <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1589291" charset="utf-8"></script>
+  <!-- JiaThis Button END -->
+
+
+  </footer>
+</article>
+
+
+  <link rel="stylesheet" href="http://static.duoshuo.com/styles/embed.default.css?349d9313.css">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="2016/03/08/Angular-React-Vue-Rendering-4/" data-title="ARV 渲染实现比较总结" data-url="/2016/03/08/Angular-React-Vue-Rendering-4/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+    var duoshuoQuery = {
+      short_name: "sprabbit"
+    };
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';
+      ds.async = true;
+      ds.src = (document.location.protocol == 'https:'
+        ? 'https:'
+        : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+  <!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+          <div class="main-footer">
+  
+    © 2016 SPRABBIT - Powered by <a href="http://hexo.io" target="_blank">Hexo</a> - Theme <a href="https://github.com/denjones/hexo-theme-chan" target="_blank">Chan</a>
+  
+</div>
+
+      
+        </div>
+      
+    </div>
+  </div>
+  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/PhotoSwipe/photoswipe.css">
+  <link rel="stylesheet" href="/PhotoSwipe/default-skin/default-skin.css">
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+      <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+
+      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+      <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+          <!--  Controls are self-explanatory. Order can be changed. -->
+
+          <div class="pswp__counter"></div>
+
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+          <button class="pswp__button pswp__button--share" title="Share"></button>
+
+          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+          <!-- element will get class pswp__preloader--active when preloader is running -->
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/PhotoSwipe/photoswipe.js"></script>
+  <script src="/PhotoSwipe/photoswipe-ui-default.js"></script>
+
+
+<script src="/perfect-scrollbar/js/min/perfect-scrollbar.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+</body>
+</html>

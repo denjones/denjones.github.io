@@ -1,0 +1,28 @@
+.photo{
+	position: relative;
+	padding:30px 10px 30px 10px;
+	width:200px;
+	height:200px;
+	margin:30px auto;
+	border: solid gray 1px;
+	background-color: #ccccbb;
+}
+
+.photo .photo_drag{
+	position: absolute;
+	width:200px;
+	height:200px;
+	margin:0 auto;
+	border:0;
+	padding:0;
+}
+
+.photo img{
+	position: absolute;
+	top: 0;
+	left: 0;
+  width:200px;
+  margin:0;
+	padding:0;
+	border: 0;
+}
